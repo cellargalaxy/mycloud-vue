@@ -2,7 +2,7 @@ import axios from 'axios';
 import qs from 'qs';
 import util from './util'
 
-var baseURL = 'http://localhost:8080'
+var baseURL = 'http://api.mycloud.cellargalaxy.top'
 var token = util.getCookie('Authorization')
 
 function getToken() {

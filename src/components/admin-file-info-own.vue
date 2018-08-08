@@ -3,7 +3,7 @@
 
 
     <b-row>
-      <b-col sm="12" md="6" lg="4" xl="3" v-for="(fileInfoOwn,fileInfoOwnIndex) in fileInfoOwns" :key="fileInfoOwnIndex">
+      <b-col sm="6" md="4" lg="3" xl="2" v-for="(fileInfoOwn,fileInfoOwnIndex) in fileInfoOwns" :key="fileInfoOwnIndex">
         <b-card no-body>
           <b-link target="_blank" :href="fileInfoOwn.fileInfo.url">
             <b-img-lazy :src="fileInfoOwn.fileInfo.url" center fluid-grow blank-color="#bbb"/>
@@ -34,7 +34,7 @@
       </b-col>
     </b-row>
 
-    <b-modal ref="own" centered title="所属" ok-only>
+    <b-modal ref="own" centered :title="'所属('+own.username+')'" ok-only>
       <b-link target="_blank" :href="own.url">
         <b-img-lazy :src="own.url!=null?own.url:''" center fluid-grow blank-color="#bbb"/>
       </b-link>
