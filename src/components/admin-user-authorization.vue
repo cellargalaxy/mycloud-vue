@@ -87,12 +87,8 @@
     },
     methods: {
       listUserAuthorization: function () {
-        adminApi.listUserAuthorization(this.userAuthorizationQuery.pageSize, this.userAuthorizationQuery.page, this.userAuthorizationQuery.userId, this.userAuthorizationQuery.username, this.userAuthorizationQuery.createTime, this.userAuthorizationQuery.updateTime)
+        adminApi.listUserAuthorizationByQuery(this.userAuthorizationQuery.pageSize)
           .then(res => {
-              if (res.data.status != 1) {
-                alert(res.data.massage)
-                return;
-              }
               this.userAuthorizations = res.data.data;
               for (let i = 0; i < this.userAuthorizations.length; i++) {
                 this.userAuthorizations[i].authorizationForm = {
@@ -108,22 +104,14 @@
           )
       },
       getUserCount: function () {
-        adminApi.getUserCount(this.userAuthorizationQuery.pageSize, this.userAuthorizationQuery.page, this.userAuthorizationQuery.userId, this.userAuthorizationQuery.username, this.userAuthorizationQuery.createTime, this.userAuthorizationQuery.updateTime)
+        adminApi.getUserCountByQuery(this.userAuthorizationQuery)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
             this.total = res.data.data;
           })
       },
       listPermission: function () {
         adminApi.listPermission()
           .then(res => {
-              if (res.data.status != 1) {
-                alert(res.data.massage)
-                return;
-              }
               this.permissions = [];
               for (let i = 0; i < res.data.data.length; i++) {
                 this.permissions.push({value: res.data.data[i].permissionId, text: res.data.data[i].permissionMark});
@@ -134,11 +122,7 @@
       addAuthorization: function (userAuthorizationIndex) {
         adminApi.addAuthorization(this.userAuthorizations[userAuthorizationIndex].authorizationForm.userId, this.userAuthorizations[userAuthorizationIndex].authorizationForm.permissionId)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('添加成功')
+            util.successInfo('添加成功')
             this.userAuthorizations[userAuthorizationIndex].authorizationForm.permissionId = 0;
             this.getUserCount()
             this.listUserAuthorization()
@@ -151,11 +135,7 @@
       removeAuthorization: function (userAuthorizationIndex, authorizationIndex) {
         adminApi.removeAuthorization(this.userAuthorizations[userAuthorizationIndex].authorizations[authorizationIndex].authorizationId)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('删除成功')
+            util.successInfo('删除成功')
             this.getUserCount()
             this.listUserAuthorization()
           })

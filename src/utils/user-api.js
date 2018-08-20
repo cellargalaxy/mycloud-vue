@@ -1,8 +1,14 @@
 import axios from './axios'
+import util from './util'
+import publicApi from './public-api'
 
-//fileInfo
+// fileInfo
 function getFileInfoByMd5(md5) {
-  return getFileInfo(0, md5, 0, null, null);
+  return getFileInfo(0, md5, 0, null, null)
+}
+
+function getFileInfoByQuery(query) {
+  return getFileInfo(query.fileId, query.md5, query.fileLength, query.contentType, query.createTime)
 }
 
 function getFileInfo(fileId, md5, fileLength, contentType, createTime) {
@@ -14,51 +20,54 @@ function getFileInfo(fileId, md5, fileLength, contentType, createTime) {
       contentType: contentType,
       createTime: createTime
     }
-  });
+  })
 }
 
-//file
+// file
 
 function uploadFile(files, sort, description) {
-  let param = new FormData();
+  util.checkParameter(null, files, sort, description)
+  const param = new FormData()
   for (let i = 0; i < files.length; i++) {
-    param.append('files', files[i]);
+    param.append('files', files[i])
   }
-  param.append('sort', sort);
-  param.append('description', description);
-  let config = {
+  param.append('sort', sort)
+  param.append('description', description)
+  const config = {
     headers: {
       'Content-Type': 'multipart/form-data',
-      'Authorization': axios.getToken(),
+      'Authorization': publicApi.getToken()
     }
-  };
-  return axios.baseAxios.post(axios.baseURL + '/user/file/uploadFile', param, config);
+  }
+  return axios.baseAxios.post(axios.baseURL + '/user/file/uploadFile', param, config)
 }
 
-//own
+// own
 
 function addOwn(fileId, fileName, sort, description) {
+  util.checkParameter('确认添加？', fileId, fileName, sort)
   return axios.instance.post('/user/own/addOwn', {
     fileId: fileId,
     fileName: fileName,
     sort: sort,
     description: description
-  });
+  })
 }
 
-function removeOwnByFileId(fileId) {
-  return removeOwn(fileId, null, null, null, null, null);
-}
-
-function removeOwn(fileId, fileName, sort, description, createTime, updateTime) {
+function removeOwn(fileId) {
+  util.checkParameter('确认删除？', fileId)
   return axios.instance.post('/user/own/removeOwn', {
     fileId: fileId,
-    fileName: fileName,
-    sort: sort,
-    description: description,
-    createTime: createTime,
-    updateTime: updateTime
-  });
+    fileName: null,
+    sort: null,
+    description: null,
+    createTime: null,
+    updateTime: null
+  })
+}
+
+function getOwnByQuery(query) {
+  return getOwn(query.fileId, query.fileName, query.sort, query.description, query.createTime, query.updateTime)
 }
 
 function getOwn(fileId, fileName, sort, description, createTime, updateTime) {
@@ -71,7 +80,11 @@ function getOwn(fileId, fileName, sort, description, createTime, updateTime) {
       createTime: createTime,
       updateTime: updateTime
     }
-  });
+  })
+}
+
+function getOwnCountByQuery(query) {
+  return getOwnCount(query.pageSize, query.page, query.fileId, query.fileName, query.sort, query.description, query.createTime, query.updateTime)
 }
 
 function getOwnCount(pageSize, page, fileId, fileName, sort, description, createTime, updateTime) {
@@ -86,7 +99,11 @@ function getOwnCount(pageSize, page, fileId, fileName, sort, description, create
       createTime: createTime,
       updateTime: updateTime
     }
-  });
+  })
+}
+
+function listOwnByQuery(query) {
+  return listOwn(query.pageSize, query.page, query.fileId, query.fileName, query.sort, query.description, query.createTime, query.updateTime)
 }
 
 function listOwn(pageSize, page, fileId, fileName, sort, description, createTime, updateTime) {
@@ -101,7 +118,11 @@ function listOwn(pageSize, page, fileId, fileName, sort, description, createTime
       createTime: createTime,
       updateTime: updateTime
     }
-  });
+  })
+}
+
+function listSortByQuery(query) {
+  return listSort(query.pageSize, query.page, query.fileId, query.fileName, query.sort, query.description, query.createTime, query.updateTime)
 }
 
 function listSort(pageSize, page, fileId, fileName, sort, description, createTime, updateTime) {
@@ -116,11 +137,11 @@ function listSort(pageSize, page, fileId, fileName, sort, description, createTim
       createTime: createTime,
       updateTime: updateTime
     }
-  });
+  })
 }
 
 function changeOwn(ownId, userId, fileId, fileName, sort, description) {
-  console.log('ownId: ' + ownId)
+  util.checkParameter('确认修改？', ownId, userId, fileId, fileName, sort)
   return axios.instance.post('/user/own/changeOwn', {
     ownId: ownId,
     userId: userId,
@@ -128,7 +149,7 @@ function changeOwn(ownId, userId, fileId, fileName, sort, description) {
     fileName: fileName,
     sort: sort,
     description: description
-  });
+  })
 }
 
 function checkAddOwn(fileId, fileName, sort, description) {
@@ -139,7 +160,7 @@ function checkAddOwn(fileId, fileName, sort, description) {
       sort: sort,
       description: description
     }
-  });
+  })
 }
 
 function checkChangeOwn(ownId, userId, fileId, fileName, sort, description) {
@@ -153,10 +174,10 @@ function checkChangeOwn(ownId, userId, fileId, fileName, sort, description) {
       description: description
     }
 
-  });
+  })
 }
 
-//user
+// user
 
 function getUser(userId, username, createTime, updateTime) {
   return axios.instance.get('/user/user/getUser', {
@@ -166,7 +187,11 @@ function getUser(userId, username, createTime, updateTime) {
       createTime: createTime,
       updateTime: updateTime
     }
-  });
+  })
+}
+
+function getUserAuthorizationByQuery(query) {
+  return getUserAuthorization(query.userId, query.username, query.createTime, query.updateTime)
 }
 
 function getUserAuthorization(userId, username, createTime, updateTime) {
@@ -177,15 +202,16 @@ function getUserAuthorization(userId, username, createTime, updateTime) {
       createTime: createTime,
       updateTime: updateTime
     }
-  });
+  })
 }
 
 function changeUser(userId, username, userPassword) {
+  util.checkParameter('确认修改？', userId, username, userPassword)
   return axios.instance.post('/user/user/changeUser', {
     userId: userId,
     username: username,
-    userPassword: userPassword,
-  });
+    userPassword: userPassword
+  })
 }
 
 function checkChangeUser(userId, username, userPassword) {
@@ -193,27 +219,32 @@ function checkChangeUser(userId, username, userPassword) {
     params: {
       userId: userId,
       username: username,
-      userPassword: userPassword,
+      userPassword: userPassword
     }
-  });
+  })
 }
 
 export default {
   getFileInfoByMd5: getFileInfoByMd5,
+  getFileInfoByQuery: getFileInfoByQuery,
   getFileInfo: getFileInfo,
   uploadFile: uploadFile,
   addOwn: addOwn,
-  removeOwnByFileId: removeOwnByFileId,
   removeOwn: removeOwn,
+  getOwnByQuery: getOwnByQuery,
   getOwn: getOwn,
+  getOwnCountByQuery: getOwnCountByQuery,
   getOwnCount: getOwnCount,
+  listOwnByQuery: listOwnByQuery,
   listOwn: listOwn,
+  listSortByQuery: listSortByQuery,
   listSort: listSort,
   changeOwn: changeOwn,
   checkAddOwn: checkAddOwn,
   checkChangeOwn: checkChangeOwn,
   getUser: getUser,
+  getUserAuthorizationByQuery: getUserAuthorizationByQuery,
   getUserAuthorization: getUserAuthorization,
   changeUser: changeUser,
-  checkChangeUser: checkChangeUser,
+  checkChangeUser: checkChangeUser
 }

@@ -51,6 +51,7 @@
 </template>
 
 <script>
+  import util from '../utils/util'
   import publicApi from '../utils/public-api'
 
   export default {
@@ -90,7 +91,7 @@
               return;
             }
             publicApi.setToken(res.data.data)
-            alert('登录成功')
+            util.successInfo('登录成功')
             this.getUserAuthorization()
           })
           .catch(error => {
@@ -102,7 +103,6 @@
         if (this.userAuthorization != null) {
           return;
         }
-
         publicApi.getUserAuthorization(this.loginForm.username)
           .then(res => {
             if (res.data.status != 1) {

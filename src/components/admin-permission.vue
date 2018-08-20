@@ -2,7 +2,7 @@
   <b-container fluid>
 
     <b-row>
-      <b-col  cols="auto">
+      <b-col cols="auto">
         <b-input-group prepend="">
           <b-input :value="permissionForm.permissionId" v-model="permissionForm.permissionId" type="number" size="sm"
                    placeholder="权限id"/>
@@ -78,11 +78,7 @@
       addPermission: function () {
         adminApi.addPermission(this.permissionForm.permissionId, this.permissionForm.permissionMark)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('添加成功')
+            util.successInfo('添加成功')
             this.permissionForm = {permissionId: 0, permissionMark: null};
             this.listPermission()
           })
@@ -90,43 +86,29 @@
       changePermission: function (permissionIndex) {
         adminApi.changePermission(this.permissions[permissionIndex].permissionId, this.permissions[permissionIndex].permissionMark)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('修改成功')
+            util.successInfo('修改成功')
             this.listPermission()
           })
       },
       removePermission: function (permissionIndex) {
         adminApi.removePermission(this.permissions[permissionIndex].permissionId)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('删除成功')
+            util.successInfo('删除成功')
             this.listPermission()
           })
       },
       listPermission: function () {
         adminApi.listPermission()
           .then(res => {
-            if (res.data.status != 1) {
-                alert(res.data.massage)
-                return;
-              }
-              this.permissions = res.data.data;
-              for (let i = 0; i < this.permissions.length; i++) {
-                this.permissions[i].createTime = util.formatTimestamp(this.permissions[i].createTime, 'yyyy-MM-dd hh:mm:ss')
-                this.permissions[i].updateTime = util.formatTimestamp(this.permissions[i].updateTime, 'yyyy-MM-dd hh:mm:ss')
-              }
-            },
-          )
+            this.permissions = res.data.data;
+            for (let i = 0; i < this.permissions.length; i++) {
+              this.permissions[i].createTime = util.formatTimestamp(this.permissions[i].createTime, 'yyyy-MM-dd hh:mm:ss')
+              this.permissions[i].updateTime = util.formatTimestamp(this.permissions[i].updateTime, 'yyyy-MM-dd hh:mm:ss')
+            }
+          })
       },
     },
-    components: {
-    },
+    components: {},
   }
 </script>
 

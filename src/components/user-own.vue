@@ -102,11 +102,7 @@
       changeOwn: function (ownIndex) {
         userApi.changeOwn(this.owns[ownIndex].ownId, this.owns[ownIndex].userId, this.owns[ownIndex].fileId, this.owns[ownIndex].fileName, this.owns[ownIndex].sort, this.owns[ownIndex].description)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('修改成功')
+            util.successInfo('修改成功')
             this.listOwn()
             this.listSort()
           })
@@ -114,22 +110,14 @@
       removeOwn: function (ownIndex) {
         userApi.removeOwnByFileId(this.owns[ownIndex].fileId)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('删除成功')
+            util.successInfo('删除成功')
             this.listOwn()
             this.listSort()
           })
       },
       listOwn: function () {
-        userApi.listOwn(this.ownQuery.pageSize, this.ownQuery.page, this.ownQuery.fileId, this.ownQuery.fileName, this.ownQuery.sort, this.ownQuery.description, this.ownQuery.createTime, this.ownQuery.updateTime)
+        userApi.listOwnByQuery(this.ownQuery)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
             this.owns = res.data.data
             for (let i = 0; i < this.owns.length; i++) {
               this.owns[i].createTime = util.formatTimestamp(this.owns[i].createTime, 'yyyy-MM-dd hh:mm:ss')
@@ -139,12 +127,8 @@
           })
       },
       listSort: function () {
-        userApi.listSort(this.sortQuery.pageSize, this.sortQuery.page, this.sortQuery.fileId, this.sortQuery.fileName, this.sortQuery.sort, this.sortQuery.description, this.sortQuery.createTime, this.sortQuery.updateTime)
+        userApi.listSortByQuery(this.sortQuery)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
             this.sorts = [{value: 'default', text: '默认'}]
             for (let i = 0; i < res.data.data.length; i++) {
               this.sorts.push({value: res.data.data[i], text: res.data.data[i]})
@@ -152,12 +136,8 @@
           })
       },
       getOwnCount: function () {
-        userApi.getOwnCount(this.ownQuery.pageSize, this.ownQuery.page, this.ownQuery.fileId, this.ownQuery.fileName, this.ownQuery.sort, this.ownQuery.description, this.ownQuery.createTime, this.ownQuery.updateTime)
+        userApi.getOwnCountByQuery(this.ownQuery)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
             this.total = res.data.data
           })
       },

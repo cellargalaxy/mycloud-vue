@@ -1,6 +1,8 @@
 <template>
   <b-card>
-    你账号的权限: <b-badge v-for="(authorization,authorizationIndex) in currentUserAuthorization.authorizations" :key="authorizationIndex" v-text="authorization.permissionMark"></b-badge>
+    你账号的权限:
+    <b-badge v-for="(authorization,authorizationIndex) in currentUserAuthorization.authorizations"
+             :key="authorizationIndex" v-text="authorization.permissionMark"></b-badge>
 
     <b-form>
       <b-form-group label="修改你的账号">
@@ -15,6 +17,7 @@
 </template>
 
 <script>
+  import util from '../utils/util'
   import publicApi from '../utils/public-api'
   import userApi from '../utils/user-api'
 
@@ -33,11 +36,7 @@
       changeUser: function () {
         userApi.changeUser(this.currentUserAuthorization.user.userId, this.userForm.username, this.userForm.userPassword)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('修改成功')
+            util.successInfo('修改成功')
             this.userForm = {username: null, userPassword: null};
           })
       },

@@ -57,6 +57,7 @@
 </template>
 
 <script>
+  import util from '../utils/util'
   import userApi from '../utils/user-api'
 
   export default {
@@ -96,12 +97,8 @@
     },
     methods: {
       listSort: function () {
-        userApi.listSort(this.sortQuery.pageSize, this.sortQuery.page, this.sortQuery.fileId, this.sortQuery.fileName, this.sortQuery.sort, this.sortQuery.description, this.sortQuery.createTime, this.sortQuery.updateTime)
+        userApi.listSortByQuery(this.sortQuery)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
             this.sorts = [{value: 'default', text: '默认'}]
             for (let i = 0; i < res.data.data.length; i++) {
               this.sorts.push({value: res.data.data[i], text: res.data.data[i]})
@@ -116,23 +113,19 @@
                 alert(res.data.massage)
                 return;
               }
-              alert('上传成功')
+              util.successInfo('上传成功')
               console.log(res.data)
             },
             error => {
-              alert('上传失败:' + error)
+              util.errorInfo('上传失败:' + error)
             }
           )
       },
       getFileInfo: function () {
-        userApi.getFileInfo(this.fileInfoQuery.fileId, this.fileInfoQuery.md5, this.fileInfoQuery.fileLength, this.fileInfoQuery.contentType, this.fileInfoQuery.createTime)
+        userApi.getFileInfoByQuery(this.fileInfoQuery)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
             if (res.data.data == null) {
-              alert('找不到md5为(' + this.fileInfoQuery.md5 + ')的文件')
+              util.errorInfo('找不到md5为(' + this.fileInfoQuery.md5 + ')的文件')
               return;
             }
             this.fileInfo = res.data.data;
@@ -142,11 +135,7 @@
       addOwn: function () {
         userApi.addOwn(this.ownForm.fileId, this.ownForm.fileName, this.ownForm.sort, this.ownForm.description)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('添加成功')
+            util.successInfo('添加成功')
             this.fileInfo = {url: ''};
             this.ownForm = {
               fileId: 0,

@@ -1,7 +1,6 @@
 <template>
   <b-container fluid>
 
-
     <b-row>
       <b-col sm="6" md="4" lg="3" xl="2" v-for="(fileInfoOwn,fileInfoOwnIndex) in fileInfoOwns" :key="fileInfoOwnIndex">
         <b-card no-body>
@@ -120,12 +119,8 @@
     },
     methods: {
       listFileInfoOwn: function () {
-        adminApi.listFileInfoOwn(this.fileInfoOwnQuery.pageSize, this.fileInfoOwnQuery.page, this.fileInfoOwnQuery.fileId, this.fileInfoOwnQuery.md5, this.fileInfoOwnQuery.fileLength, this.fileInfoOwnQuery.contentType, this.fileInfoOwnQuery.createTime, this.fileInfoOwnQuery.updateTime)
+        adminApi.listFileInfoOwnByQuery(this.fileInfoOwnQuery)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
             for (let i = 0; i <res.data.data.length; i++) {
               res.data.data[i].fileInfo.createTime = util.formatTimestamp(res.data.data[i].fileInfo.createTime, 'yyyy-MM-dd hh:mm:ss')
               res.data.data[i].fileInfo.updateTime = util.formatTimestamp(res.data.data[i].fileInfo.updateTime, 'yyyy-MM-dd hh:mm:ss')
@@ -152,34 +147,22 @@
       changeOwn: function () {
         adminApi.changeOwn(this.own.ownId, this.own.userId, this.own.fileId, this.own.fileName, this.own.sort, this.own.description)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('修改成功')
+            util.successInfo('修改成功')
             this.listFileInfoOwn()
           })
       },
       removeOwn: function () {
         adminApi.removeOwn(this.own.ownId)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('删除成功')
+            util.successInfo('删除成功')
             this.hideModal()
             this.listFileInfoOwn()
             this.getFileInfoCount()
           })
       },
       listUser: function () {
-        adminApi.listUser(this.userQuery.pageSize, this.userQuery.page, this.userQuery.userId, this.userQuery.username, this.userQuery.createTime, this.userQuery.updateTime)
+        adminApi.listUserByQuery(this.userQuery)
           .then(res => {
-              if (res.data.status != 1) {
-                alert(res.data.massage)
-                return;
-              }
               this.users = [];
               for (let i = 0; i < res.data.data.length; i++) {
                 this.users.push({value: res.data.data[i].userId, text: res.data.data[i].username})
@@ -189,37 +172,26 @@
       },
       turnPage: function (page) {
         this.fileInfoOwnQuery.page = page;
+        this.listFileInfoOwn()
       },
       removeFileInfo: function (fileInfoOwnIndex) {
-        adminApi.removeFileInfoByFileIdOrMd5(this.fileInfoOwns[fileInfoOwnIndex].fileInfo.fileId, this.fileInfoOwns[fileInfoOwnIndex].fileInfo.md5)
+        adminApi.removeFileInfo(this.fileInfoOwns[fileInfoOwnIndex].fileInfo.fileId)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('删除成功')
+            util.successInfo('删除成功')
             this.listFileInfoOwn()
             this.getFileInfoCount()
           })
       },
       getFileInfoCount: function () {
-        adminApi.getFileInfoCount(this.fileInfoOwnQuery.pageSize, this.fileInfoOwnQuery.page, this.fileInfoOwnQuery.fileId, this.fileInfoOwnQuery.md5, this.fileInfoOwnQuery.fileLength, this.fileInfoOwnQuery.contentType, this.fileInfoOwnQuery.createTime, this.fileInfoOwnQuery.updateTime)
+        adminApi.getFileInfoCountByQuery(this.fileInfoOwnQuery)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
             this.total = res.data.data;
           })
       },
       addOwn: function (fileInfoOwnIndex) {
         adminApi.addOwn(this.fileInfoOwns[fileInfoOwnIndex].ownForm.userId, this.fileInfoOwns[fileInfoOwnIndex].ownForm.fileId, this.fileInfoOwns[fileInfoOwnIndex].ownForm.fileName, this.fileInfoOwns[fileInfoOwnIndex].ownForm.sort, this.fileInfoOwns[fileInfoOwnIndex].ownForm.description)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('添加成功')
+            util.successInfo('添加成功')
             this.fileInfoOwns[fileInfoOwnIndex].ownForm = {
               userId: 0,
               fileId: this.fileInfoOwns[fileInfoOwnIndex].fileInfo.fileId,

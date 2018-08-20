@@ -46,10 +46,6 @@
     created:function () {
       adminApi.listExceptionInfo()
         .then(res => {
-          if (res.data.status != 1) {
-            alert(res.data.massage)
-            return;
-          }
           this.exceptionInfos = res.data.data;
           for (let i = 0; i < this.exceptionInfos.length; i++) {
             this.exceptionInfos[i].date = util.formatTimestamp(this.exceptionInfos[i].date, 'yyyy-MM-dd hh:mm:ss');

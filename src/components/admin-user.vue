@@ -97,11 +97,7 @@
       addUser: function () {
         adminApi.addUser(this.userForm.username, this.userForm.userPassword)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('添加成功')
+            util.successInfo('添加成功')
             this.userForm = {username: null, userPassword: null};
             this.listUser()
             this.getUserCount()
@@ -110,33 +106,21 @@
       changeUser: function (index) {
         adminApi.changeUser(this.users[index].userId, this.users[index].username, this.users[index].userPassword)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('修改成功')
+            util.successInfo('修改成功')
             this.listUser()
           })
       },
       removeUser: function (index) {
         adminApi.removeUser(this.users[index].userId)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
-            alert('删除成功')
+            util.successInfo('删除成功')
             this.listUser()
             this.getUserCount()
           })
       },
       listUser: function () {
-        adminApi.listUser(this.userQuery.pageSize, this.userQuery.page, this.userQuery.userId, this.userQuery.username, this.userQuery.createTime, this.userQuery.updateTime)
+        adminApi.listUserByQuery(this.userQuery)
           .then(res => {
-              if (res.data.status != 1) {
-                alert(res.data.massage)
-                return;
-              }
               this.users = res.data.data;
               for (let i = 0; i < this.users.length; i++) {
                 this.users[i].createTime = util.formatTimestamp(this.users[i].createTime, 'yyyy-MM-dd hh:mm:ss')
@@ -147,12 +131,8 @@
           )
       },
       getUserCount: function () {
-        adminApi.getUserCount(this.userQuery.pageSize, this.userQuery.page, this.userQuery.userId, this.userQuery.username, this.userQuery.createTime, this.userQuery.updateTime)
+        adminApi.getUserCountByQuery(this.userQuery)
           .then(res => {
-            if (res.data.status != 1) {
-              alert(res.data.massage)
-              return;
-            }
             this.total = res.data.data;
           })
       },
