@@ -10,11 +10,11 @@ import pageAdminTask from '../components/page-admin-task'
 import pageUserUser from '../components/page-user-user'
 import pageAdminFileInfoOwn from '../components/page-admin-file-info-own'
 import pageHome from '../components/page-home'
-import test from '../components/test'
+import pageAdminFile from '../components/page-admin-file'
 
 Vue.use(Router)
 
-var router=new Router({
+var router = new Router({
   routes: [
     {
       path: '/',
@@ -86,6 +86,14 @@ var router=new Router({
       component: pageUserUser,
       meta: {
         title: 'mycloud-个人主页'
+      },
+    },
+    {
+      path: '/admin/file',
+      name: 'pageAdminFile',
+      component: pageAdminFile,
+      meta: {
+        title: 'mycloud-文件配置'
       },
     },
     {

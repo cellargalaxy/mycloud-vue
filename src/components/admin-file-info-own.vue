@@ -35,7 +35,7 @@
 
     <b-modal ref="own" centered :title="'所属('+own.username+')'" ok-only>
       <b-link target="_blank" :href="own.url">
-        <b-img-lazy :src="own.url!=null?own.url:''" center fluid-grow blank-color="#bbb"/>
+        <b-img :src="own.url!=null?own.url:''" center fluid-grow blank-color="#bbb"/>
       </b-link>
       <b-list-group flush>
         <b-list-group-item>
@@ -121,7 +121,7 @@
       listFileInfoOwn: function () {
         adminApi.listFileInfoOwnByQuery(this.fileInfoOwnQuery)
           .then(res => {
-            for (let i = 0; i <res.data.data.length; i++) {
+            for (let i = 0; i < res.data.data.length; i++) {
               res.data.data[i].fileInfo.createTime = util.formatTimestamp(res.data.data[i].fileInfo.createTime, 'yyyy-MM-dd hh:mm:ss')
               res.data.data[i].fileInfo.updateTime = util.formatTimestamp(res.data.data[i].fileInfo.updateTime, 'yyyy-MM-dd hh:mm:ss')
               res.data.data[i].fileInfo.fileLength = util.formatFileSize(res.data.data[i].fileInfo.fileLength)
@@ -175,7 +175,7 @@
         this.listFileInfoOwn()
       },
       removeFileInfo: function (fileInfoOwnIndex) {
-        adminApi.removeFileInfo(this.fileInfoOwns[fileInfoOwnIndex].fileInfo.fileId)
+        adminApi.removeFile(this.fileInfoOwns[fileInfoOwnIndex].fileInfo.fileId)
           .then(res => {
             util.successInfo('删除成功')
             this.listFileInfoOwn()

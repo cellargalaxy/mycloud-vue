@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid>
     <b-row>
       <b-col>
         <navbar></navbar>
@@ -8,7 +8,7 @@
     <br/>
     <b-row>
       <b-col>
-        <user-own></user-own>
+        <admin-file></admin-file>
       </b-col>
     </b-row>
   </b-container>
@@ -16,14 +16,13 @@
 
 <script>
   import navbar from './navbar'
-  import userOwn from './user-own'
+  import adminFile from './admin-file'
 
   export default {
-    name: "page-user-own",
-
+    name: "page-admin-file",
     components: {
       'navbar': navbar,
-      'user-own': userOwn,
+      'admin-file': adminFile,
     },
   }
 </script>

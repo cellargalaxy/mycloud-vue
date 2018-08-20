@@ -7,7 +7,7 @@ var baseURL = 'http://api.mycloud.cellargalaxy.top:8080'
 
 var baseAxios = axios.create({
   baseURL: baseURL,
-  timeout: 5000
+  timeout: 1000 * 60 * 60
 })
 
 var simpleAxios = axios.create({

@@ -17,13 +17,14 @@
 <script>
   import navbar from './navbar'
   import adminExceptionInfo from './admin-exception-info'
-    export default {
-        name: "page-admin-exception-info",
-      components: {
-        'navbar': navbar,
-        'admin-exception-info': adminExceptionInfo,
-      },
-    }
+
+  export default {
+    name: "page-admin-exception-info",
+    components: {
+      'navbar': navbar,
+      'admin-exception-info': adminExceptionInfo,
+    },
+  }
 </script>
 
 <style scoped>

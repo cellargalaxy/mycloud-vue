@@ -17,13 +17,14 @@
 <script>
   import navbar from './navbar'
   import adminUser from './admin-user'
-    export default {
-        name: "page-admin-user",
-      components: {
-        'navbar': navbar,
-        'admin-user': adminUser,
-      },
-    }
+
+  export default {
+    name: "page-admin-user",
+    components: {
+      'navbar': navbar,
+      'admin-user': adminUser,
+    },
+  }
 </script>
 
 <style scoped>

@@ -22,6 +22,9 @@
         <b-nav-item v-show="hasPermission('ADMIN')" href="#/admin/fileInfoOwn"
                     :active="this.$route.path=='/admin/fileInfoOwn'">所属管理
         </b-nav-item>
+        <b-nav-item v-show="hasPermission('ADMIN')" href="#/admin/file"
+                    :active="this.$route.path=='/admin/file'">文件配置
+        </b-nav-item>
         <b-nav-item v-show="hasPermission('ADMIN')" href="#/admin/exceptionInfo"
                     :active="this.$route.path=='/admin/exceptionInfo'">异常日志
         </b-nav-item>

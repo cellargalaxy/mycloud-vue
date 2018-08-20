@@ -63,6 +63,7 @@ function checkParameter(message, ...parameters) {
   parameters.forEach(function (parameter) {
     if (parameter == null || (isNaN(parameter) && parameter.length == 0) || parameter < 1) {
       errorInfo('非法参数:' + parameter)
+      console.log(parameters)
       throw new Error('非法参数:' + parameter)
     }
   })

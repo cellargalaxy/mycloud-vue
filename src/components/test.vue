@@ -7,9 +7,9 @@
 
   export default {
     name: "test",
-    methods:{
-      turnPage:function (page) {
-        console.log('page:'+page)
+    methods: {
+      turnPage: function (page) {
+        console.log('page:' + page)
       }
     },
     components: {

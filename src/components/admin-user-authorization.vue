@@ -21,7 +21,8 @@
           {{userAuthorizations[data.index].user.username}}
         </template>
         <template slot="authorization" slot-scope="data">
-          <b-badge v-for="(authorization,authorizationIndex) in userAuthorizations[data.index].authorizations" :key="authorizationIndex"
+          <b-badge v-for="(authorization,authorizationIndex) in userAuthorizations[data.index].authorizations"
+                   :key="authorizationIndex"
                    :title="authorization.updateTime">{{authorization.permissionMark}}
             <b-link @click="removeAuthorization(data.index,authorizationIndex)">&times;</b-link>
           </b-badge>

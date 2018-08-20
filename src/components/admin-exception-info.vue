@@ -43,7 +43,7 @@
         exceptionInfos: []
       }
     },
-    created:function () {
+    created: function () {
       adminApi.listExceptionInfo()
         .then(res => {
           this.exceptionInfos = res.data.data;

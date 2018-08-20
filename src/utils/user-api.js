@@ -26,7 +26,7 @@ function getFileInfo(fileId, md5, fileLength, contentType, createTime) {
 // file
 
 function uploadFile(files, sort, description) {
-  util.checkParameter(null, files, sort, description)
+  util.checkParameter(null, files, sort)
   const param = new FormData()
   for (let i = 0; i < files.length; i++) {
     param.append('files', files[i])

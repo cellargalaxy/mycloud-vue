@@ -1,6 +1,6 @@
 <template>
-    <b-pagination :total-rows="total" :per-page="pageSize" v-model="currentPage" @change="change"
-  align="center"></b-pagination>
+  <b-pagination :total-rows="total" :per-page="pageSize" v-model="currentPage" @change="change"
+                align="center"></b-pagination>
 </template>
 
 <script>

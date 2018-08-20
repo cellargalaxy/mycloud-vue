@@ -504,6 +504,115 @@ function checkChangeUser(userId, username, userPassword) {
   })
 }
 
+//task
+
+function removeWaitTask(taskId) {
+  util.checkParameter('确认删除？', taskId)
+  return axios.instance.post('/admin/task/removeWaitTask', {taskId: taskId})
+}
+
+function getCurrentTask() {
+  return axios.instance.get('/admin/task/getCurrentTask', {params: {}})
+}
+
+function listWaitTask() {
+  return axios.instance.get('/admin/task/listWaitTask', {params: {}})
+}
+
+function getWaitTaskCount() {
+  return axios.instance.get('/admin/task/getWaitTaskCount', {params: {}})
+}
+
+function removeTask(taskId) {
+  util.checkParameter('确认删除？', taskId)
+  return axios.instance.post('/admin/task/removeTask', {taskId: taskId})
+}
+
+function getTaskByQuery(query) {
+  return getTask(query.taskId, query.userId, query.createTime, query.taskSort, query.status, query.massage, query.finishTime)
+}
+
+function getTask(taskId, userId, createTime, taskSort, status, massage, finishTime) {
+  return axios.instance.get('/admin/task/getTask', {
+    params: {
+      taskId: taskId,
+      userId: userId,
+      createTime: createTime,
+      taskSort: taskSort,
+      status: status,
+      massage: massage,
+      finishTime: finishTime
+    }
+  })
+}
+
+function listTaskByQuery(query) {
+  return listTask(query.taskId, query.userId, query.createTime, query.taskSort, query.status, query.massage, query.finishTime)
+}
+
+function listTask(taskId, userId, createTime, taskSort, status, massage, finishTime) {
+  return axios.instance.get('/admin/task/listTask', {
+    params: {
+      taskId: taskId,
+      userId: userId,
+      createTime: createTime,
+      taskSort: taskSort,
+      status: status,
+      massage: massage,
+      finishTime: finishTime
+    }
+  })
+}
+
+function getTaskCountByQuery(query) {
+  return getTaskCount(query.taskId, query.userId, query.createTime, query.taskSort, query.status, query.massage, query.finishTime)
+}
+
+function getTaskCount(taskId, userId, createTime, taskSort, status, massage, finishTime) {
+  return axios.instance.get('/admin/task/getTaskCount', {
+    params: {
+      taskId: taskId,
+      userId: userId,
+      createTime: createTime,
+      taskSort: taskSort,
+      status: status,
+      massage: massage,
+      finishTime: finishTime
+    }
+  })
+}
+
+//file
+
+function getDriveInfo() {
+  return axios.instance.get('/admin/file/getDriveInfo', {params: {}})
+}
+
+function removeFile(fileId) {
+  util.checkParameter('？？！！？？确认《删除》文件？？！！？？', fileId)
+  return axios.instance.post('/admin/file/removeFile', {fileId: fileId})
+}
+
+function restoreAllFileToLocal() {
+  util.checkParameter('确认恢复全部文件到本地？')
+  return axios.instance.post('/admin/file/restoreAllFileToLocal', {})
+}
+
+function startRestoreAllFileToLocal() {
+  util.checkParameter('确认开始自动同步全部文件到本地？')
+  return axios.instance.post('/admin/file/startRestoreAllFileToLocal', {})
+}
+
+function stopRestoreAllFileToLocal() {
+  util.checkParameter('确认停止自动同步全部文件到本地？')
+  return axios.instance.post('/admin/file/stopRestoreAllFileToLocal', {})
+}
+
+function deleteAllFileFromLocal() {
+  util.checkParameter('确认删除全部文件从本地？')
+  return axios.instance.post('/admin/file/deleteAllFileFromLocal', {})
+}
+
 export default {
   clearExceptionInfo: clearExceptionInfo,
   getExceptionInfoCount: getExceptionInfoCount,
@@ -566,5 +675,22 @@ export default {
   listUserOwn: listUserOwn,
   changeUser: changeUser,
   checkAddUser: checkAddUser,
-  checkChangeUser: checkChangeUser
+  checkChangeUser: checkChangeUser,
+  removeWaitTask: removeWaitTask,
+  getCurrentTask: getCurrentTask,
+  listWaitTask: listWaitTask,
+  getWaitTaskCount: getWaitTaskCount,
+  removeTask: removeTask,
+  getTaskByQuery: getTaskByQuery,
+  getTask: getTask,
+  listTaskByQuery: listTaskByQuery,
+  listTask: listTask,
+  getTaskCountByQuery: getTaskCountByQuery,
+  getTaskCount: getTaskCount,
+  getDriveInfo: getDriveInfo,
+  removeFile: removeFile,
+  restoreAllFileToLocal: restoreAllFileToLocal,
+  startRestoreAllFileToLocal: startRestoreAllFileToLocal,
+  stopRestoreAllFileToLocal: stopRestoreAllFileToLocal,
+  deleteAllFileFromLocal: deleteAllFileFromLocal,
 }

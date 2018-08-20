@@ -17,13 +17,14 @@
 <script>
   import navbar from './navbar'
   import adminTask from './admin-task'
-    export default {
-        name: "page-admin-task",
-      components: {
-        'navbar': navbar,
-        'admin-task': adminTask,
-      },
-    }
+
+  export default {
+    name: "page-admin-task",
+    components: {
+      'navbar': navbar,
+      'admin-task': adminTask,
+    },
+  }
 </script>
 
 <style scoped>

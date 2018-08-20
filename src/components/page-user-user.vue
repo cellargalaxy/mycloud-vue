@@ -24,13 +24,14 @@
 <script>
   import navbar from './navbar'
   import userUser from './user-user'
-    export default {
-        name: "page-user-user",
-      components: {
-        'navbar': navbar,
-        'user-user': userUser,
-      },
-    }
+
+  export default {
+    name: "page-user-user",
+    components: {
+      'navbar': navbar,
+      'user-user': userUser,
+    },
+  }
 </script>
 
 <style scoped>
