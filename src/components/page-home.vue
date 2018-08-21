@@ -69,7 +69,7 @@
             url: 'https://i.loli.net/2018/08/21/5b7bb5dd4f0df.png',
             md5: '4a2599540220af6579e287bcd96a7c35',
             fileLength: '1.64 MB',
-            contentType: 'image/jpeg',
+            contentType: 'image/png',
             fileName: '5b7bb5dd4f0df.png',
             sort: '动漫',
             description: '来自深渊'
