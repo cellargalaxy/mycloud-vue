@@ -46,6 +46,9 @@
           <b-form-input v-model="loginForm.password" size="sm" type="password" placeholder="密码"/>
           <b-button size="sm" type="submit">登录</b-button>
         </b-nav-form>
+        <b-nav-item v-show="logined" href="#/" :active="this.$route.path=='/'" @click="logout">
+          <b-button size="sm">注销</b-button>
+        </b-nav-item>
       </b-navbar-nav>
 
     </b-collapse>
@@ -79,7 +82,7 @@
           return false;
         }
         for (let i = 0; i < this.userAuthorization.authorizations.length; i++) {
-          if (this.userAuthorization.authorizations[i].permissionMark == permission) {
+          if (this.userAuthorization.authorizations[i].permissionName == permission) {
             return true;
           }
         }
@@ -100,6 +103,11 @@
           .catch(error => {
             alert(error)
           });
+      },
+      logout: function () {
+        publicApi.setToken(null)
+        this.userAuthorization = null
+        publicApi.setCurrentUserAuthorization(this.userAuthorization);
       },
       getUserAuthorization() {
         this.userAuthorization = publicApi.getCurrentUserAuthorization();

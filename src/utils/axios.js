@@ -3,7 +3,7 @@ import qs from 'qs'
 import util from './util'
 import publicApi from './public-api'
 
-var baseURL = 'http://api.mycloud.cellargalaxy.top'
+var baseURL = 'http://123.207.79.108:18088'
 
 var baseAxios = axios.create({
   baseURL: baseURL,

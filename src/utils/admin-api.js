@@ -301,11 +301,11 @@ function checkChangeOwn(ownId, userId, fileId, fileName, sort, description) {
 
 // permission
 
-function addPermission(permissionId, permissionMark) {
-  util.checkParameter('确认添加？', permissionId, permissionMark)
+function addPermission(permissionId, permissionName) {
+  util.checkParameter('确认添加？', permissionId, permissionName)
   return axios.instance.post('/admin/permission/addPermission', {
     permissionId: permissionId,
-    permissionMark: permissionMark
+    permissionName: permissionName
   })
 }
 
@@ -322,13 +322,13 @@ function listPermission() {
   return listPermissions(100, 1, 0, null, null, null)
 }
 
-function listPermissions(pageSize, page, permissionId, permissionMark, createTime, updateTime) {
+function listPermissions(pageSize, page, permissionId, permissionName, createTime, updateTime) {
   return axios.instance.get('/admin/permission/listPermission', {
     params: {
       pageSize: pageSize,
       page: page,
       permissionId: permissionId,
-      permissionMark: permissionMark,
+      permissionName: permissionName,
       createTime: createTime,
       updateTime: updateTime
     }
@@ -340,44 +340,44 @@ function getPermissionAuthorization(permissionId) {
 }
 
 function listPermissionAuthorizationByQuery(query) {
-  return listPermissionAuthorization(query.pageSize, query.page, query.permissionId, query.permissionMark, query.createTime, query.updateTime)
+  return listPermissionAuthorization(query.pageSize, query.page, query.permissionId, query.permissionName, query.createTime, query.updateTime)
 }
 
-function listPermissionAuthorization(pageSize, page, permissionId, permissionMark, createTime, updateTime) {
+function listPermissionAuthorization(pageSize, page, permissionId, permissionName, createTime, updateTime) {
   return axios.instance.get('/admin/permission/listPermissionAuthorization', {
     params: {
       pageSize: pageSize,
       page: page,
       permissionId: permissionId,
-      permissionMark: permissionMark,
+      permissionName: permissionName,
       createTime: createTime,
       updateTime: updateTime
     }
   })
 }
 
-function changePermission(permissionId, permissionMark) {
-  util.checkParameter('确认修改？', permissionId, permissionMark)
+function changePermission(permissionId, permissionName) {
+  util.checkParameter('确认修改？', permissionId, permissionName)
   return axios.instance.post('/admin/permission/changePermission', {
     permissionId: permissionId,
-    permissionMark: permissionMark
+    permissionName: permissionName
   })
 }
 
-function checkAddPermission(permissionId, permissionMark) {
+function checkAddPermission(permissionId, permissionName) {
   return axios.instance.get('/admin/permission/checkAddPermission', {
     params: {
       permissionId: permissionId,
-      permissionMark: permissionMark
+      permissionName: permissionName
     }
   })
 }
 
-function checkChangePermission(permissionId, permissionMark) {
+function checkChangePermission(permissionId, permissionName) {
   return axios.instance.get('/admin/permission/checkChangePermission', {
     params: {
       permissionId: permissionId,
-      permissionMark: permissionMark
+      permissionName: permissionName
     }
   })
 }

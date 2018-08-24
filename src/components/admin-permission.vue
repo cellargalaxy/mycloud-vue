@@ -6,7 +6,7 @@
         <b-input-group prepend="">
           <b-input :value="permissionForm.permissionId" v-model="permissionForm.permissionId" type="number" size="sm"
                    placeholder="权限id"/>
-          <b-input :value="permissionForm.permissionMark" v-model="permissionForm.permissionMark" type="text" size="sm"
+          <b-input :value="permissionForm.permissionName" v-model="permissionForm.permissionName" type="text" size="sm"
                    placeholder="权限"/>
           <b-input-group-append>
             <b-button size="sm" variant="success" @click="addPermission">添加</b-button>
@@ -22,8 +22,8 @@
                         placeholder="权限id"
                         size="sm"></b-form-input>
         </template>
-        <template slot="permissionMark" slot-scope="data">
-          <b-form-input v-model="permissions[data.index].permissionMark" :value="data.value" type="text"
+        <template slot="permissionName" slot-scope="data">
+          <b-form-input v-model="permissions[data.index].permissionName" :value="data.value" type="text"
                         placeholder="密码"
                         size="sm"></b-form-input>
         </template>
@@ -48,14 +48,14 @@
     name: "admin-permission",
     data() {
       return {
-        permissionForm: {permissionId: 0, permissionMark: null},
+        permissionForm: {permissionId: 0, permissionName: null},
         fields: [
           {
             key: 'permissionId',
             label: '权限id',
           },
           {
-            key: 'permissionMark',
+            key: 'permissionName',
             label: '密码',
           },
           {
@@ -76,15 +76,15 @@
     },
     methods: {
       addPermission: function () {
-        adminApi.addPermission(this.permissionForm.permissionId, this.permissionForm.permissionMark)
+        adminApi.addPermission(this.permissionForm.permissionId, this.permissionForm.permissionName)
           .then(res => {
             util.successInfo('添加成功')
-            this.permissionForm = {permissionId: 0, permissionMark: null};
+            this.permissionForm = {permissionId: 0, permissionName: null};
             this.listPermission()
           })
       },
       changePermission: function (permissionIndex) {
-        adminApi.changePermission(this.permissions[permissionIndex].permissionId, this.permissions[permissionIndex].permissionMark)
+        adminApi.changePermission(this.permissions[permissionIndex].permissionId, this.permissions[permissionIndex].permissionName)
           .then(res => {
             util.successInfo('修改成功')
             this.listPermission()

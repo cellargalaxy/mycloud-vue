@@ -2,7 +2,7 @@
   <b-card>
     你账号的权限:
     <b-badge v-for="(authorization,authorizationIndex) in currentUserAuthorization.authorizations"
-             :key="authorizationIndex" v-text="authorization.permissionMark"></b-badge>
+             :key="authorizationIndex" v-text="authorization.permissionName"></b-badge>
 
     <b-form>
       <b-form-group label="修改你的账号">

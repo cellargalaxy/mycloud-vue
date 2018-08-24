@@ -23,7 +23,7 @@
         <template slot="authorization" slot-scope="data">
           <b-badge v-for="(authorization,authorizationIndex) in userAuthorizations[data.index].authorizations"
                    :key="authorizationIndex"
-                   :title="authorization.updateTime">{{authorization.permissionMark}}
+                   :title="authorization.updateTime">{{authorization.permissionName}}
             <b-link @click="removeAuthorization(data.index,authorizationIndex)">&times;</b-link>
           </b-badge>
         </template>
@@ -115,7 +115,7 @@
           .then(res => {
               this.permissions = [];
               for (let i = 0; i < res.data.data.length; i++) {
-                this.permissions.push({value: res.data.data[i].permissionId, text: res.data.data[i].permissionMark});
+                this.permissions.push({value: res.data.data[i].permissionId, text: res.data.data[i].permissionName});
               }
             },
           )
