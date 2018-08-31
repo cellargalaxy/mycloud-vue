@@ -5,10 +5,7 @@
     </b-row>
     <b-row>
       <b-button-group>
-        <b-button variant="success" @click="restoreAllFileToLocal">恢复全部文件到本地</b-button>
-        <b-button variant="info" @click="startRestoreAllFileToLocal">开始自动同步文件到本地</b-button>
-        <b-button variant="warning" @click="stopRestoreAllFileToLocal">停止自动同步文件到本地</b-button>
-        <b-button variant="danger" @click="deleteAllFileFromLocal">删除全部文件从本地</b-button>
+        <b-button variant="danger" @click="removeAllLocalFile">删除全部文件从本地</b-button>
       </b-button-group>
     </b-row>
   </b-container>
@@ -23,6 +20,10 @@
     data() {
       return {
         driveInfoFields: [
+          {
+            key: 'useSpace',
+            label: '已用磁盘空间',
+          },
           {
             key: 'freeSpace',
             label: '空闲磁盘空间',
@@ -68,6 +69,7 @@
           .then(res => {
             this.driveInfo = [res.data.data];
             for (let i = 0; i < this.driveInfo.length; i++) {
+              this.driveInfo[i].useSpace = util.formatFileSize(this.driveInfo[i].useSpace);
               this.driveInfo[i].freeSpace = util.formatFileSize(this.driveInfo[i].freeSpace);
               this.driveInfo[i].totalSpace = util.formatFileSize(this.driveInfo[i].totalSpace);
               this.driveInfo[i].freePhysicalMemorySize = util.formatFileSize(this.driveInfo[i].freePhysicalMemorySize);
@@ -77,26 +79,8 @@
             }
           })
       },
-      restoreAllFileToLocal: function () {
-        adminApi.restoreAllFileToLocal()
-          .then(res => {
-            util.successInfo('操作成功')
-          })
-      },
-      startRestoreAllFileToLocal: function () {
-        adminApi.startRestoreAllFileToLocal()
-          .then(res => {
-            util.successInfo('操作成功')
-          })
-      },
-      stopRestoreAllFileToLocal: function () {
-        adminApi.stopRestoreAllFileToLocal()
-          .then(res => {
-            util.successInfo('操作成功')
-          })
-      },
-      deleteAllFileFromLocal: function () {
-        adminApi.deleteAllFileFromLocal()
+      removeAllLocalFile: function () {
+        adminApi.removeAllLocalFile()
           .then(res => {
             util.successInfo('操作成功')
           })

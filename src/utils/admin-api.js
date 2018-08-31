@@ -593,24 +593,9 @@ function removeFile(fileId) {
   return axios.instance.post('/admin/file/removeFile', {fileId: fileId})
 }
 
-function restoreAllFileToLocal() {
-  util.checkParameter('确认恢复全部文件到本地？')
-  return axios.instance.post('/admin/file/restoreAllFileToLocal', {})
-}
-
-function startRestoreAllFileToLocal() {
-  util.checkParameter('确认开始自动同步全部文件到本地？')
-  return axios.instance.post('/admin/file/startRestoreAllFileToLocal', {})
-}
-
-function stopRestoreAllFileToLocal() {
-  util.checkParameter('确认停止自动同步全部文件到本地？')
-  return axios.instance.post('/admin/file/stopRestoreAllFileToLocal', {})
-}
-
-function deleteAllFileFromLocal() {
+function removeAllLocalFile() {
   util.checkParameter('确认删除全部文件从本地？')
-  return axios.instance.post('/admin/file/deleteAllFileFromLocal', {})
+  return axios.instance.post('/admin/file/removeAllLocalFile', {})
 }
 
 export default {
@@ -689,8 +674,5 @@ export default {
   getTaskCount: getTaskCount,
   getDriveInfo: getDriveInfo,
   removeFile: removeFile,
-  restoreAllFileToLocal: restoreAllFileToLocal,
-  startRestoreAllFileToLocal: startRestoreAllFileToLocal,
-  stopRestoreAllFileToLocal: stopRestoreAllFileToLocal,
-  deleteAllFileFromLocal: deleteAllFileFromLocal,
+  removeAllLocalFile: removeAllLocalFile,
 }
