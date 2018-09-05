@@ -1,16 +1,15 @@
 import axios from 'axios'
 import qs from 'qs'
 import util from './util'
-import publicApi from './public-api'
 
-var baseURL = 'http://api.mycloud.cellargalaxy.top'
+const baseURL = 'http://api.mycloud.cellargalaxy.top'
 
-var baseAxios = axios.create({
+const baseAxios = axios.create({
   baseURL: baseURL,
   timeout: 1000 * 60 * 60
 })
 
-var simpleAxios = axios.create({
+const simpleAxios = axios.create({
   baseURL: baseURL,
   timeout: 5000
 })
@@ -19,13 +18,13 @@ simpleAxios.interceptors.request.use(
     config.data = qs.stringify(config.data)
     config.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': publicApi.getToken()
+      'Authorization': getToken()
     }
     return config
   }
 )
 
-var instance = axios.create({
+const instance = axios.create({
   baseURL: baseURL,
   timeout: 5000
 })
@@ -34,7 +33,7 @@ instance.interceptors.request.use(
     config.data = qs.stringify(config.data)
     config.headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': publicApi.getToken()
+      'Authorization': getToken()
     }
     return config
   },
@@ -59,9 +58,39 @@ instance.interceptors.response.use(
   }
 )
 
+var token = null
+
+function setToken(t) {
+  token = t
+  util.setCookie('Authorization', t)
+}
+
+function getToken() {
+  if (token == null) {
+    token = util.getCookie('Authorization')
+  }
+  return token
+}
+
+function logined() {
+  return getToken() != null && getToken() != 'null'
+}
+
+function createEmtryAxios() {
+  return {
+    then: function () {
+    }, catch: function () {
+    }
+  }
+}
+
 export default {
   baseAxios: baseAxios,
   simpleAxios: simpleAxios,
   instance: instance,
   baseURL: baseURL,
+  setToken: setToken,
+  getToken: getToken,
+  createEmtryAxios: createEmtryAxios,
+  logined: logined,
 }
