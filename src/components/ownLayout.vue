@@ -1,16 +1,10 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <sort-badge-wall @chooseSort="chooseSort" :sorts="sorts"/>
-      </b-col>
-    </b-row>
-
+  <div>
     <b-row>
       <b-col>
         <b-card>
           <b-form-radio-group size="sm" buttons v-model="ownTable"
-                              :options="[{text:'表格',value:true},{text:'图片墙',value:false}]"/>
+                              :options="[{text:'图片墙',value:false},{text:'表格',value:true}]"/>
         </b-card>
       </b-col>
     </b-row>
@@ -31,13 +25,12 @@
         <pagination @turnPage="turnPage" :total="total" :pageSize="pageSize"/>
       </b-col>
     </b-row>
-  </b-container>
+  </div>
 </template>
 
-<!-- <own-layout @chooseSort="chooseSort" @changeOwn="changeOwn" @removeOwn="removeOwn" @turnPage="turnPage" :sorts="sorts" :owns="owns" :total="total" :pageSize="pageSize"/> -->
+<!-- <own-layout @changeOwn="changeOwn" @removeOwn="removeOwn" @turnPage="turnPage" :owns="owns" :total="total" :pageSize="pageSize"/> -->
 
 <script>
-  import sortBadgeWall from './sortBadgeWall'
   import ownTable from './ownTable'
   import ownImgWall from './ownImgWall'
   import pagination from './pagination'
@@ -46,7 +39,7 @@
     name: "ownLayout",
     data() {
       return {
-        ownTable: true,
+        ownTable: false,
       }
     },
     props: {
@@ -64,8 +57,8 @@
             fileName: "5b7bb5dd4f0df.png",
             sort: "动漫",
             description: null,
-            createTime: 1535866954000,
-            updateTime: 1535866954000,
+            createTime: 1535731200000,
+            updateTime: 1535731200000,
             username: "mycloud",
             md5: "4a2599540220af6579e287bcd96a7c35",
             fileLength: 163740,
@@ -78,8 +71,8 @@
             fileName: "5b7bbc8ec3633.jpg",
             sort: "动漫",
             description: null,
-            createTime: 1535866954000,
-            updateTime: 1535866954000,
+            createTime: 1535731200000,
+            updateTime: 1535731200000,
             username: "mycloud",
             md5: "84d91144667fb45e1ad9d8d213a089db",
             fileLength: 163740,
@@ -92,8 +85,8 @@
             fileName: "5accdcbcb1738.jpg",
             sort: "动漫",
             description: null,
-            createTime: 1535866954000,
-            updateTime: 1535866954000,
+            createTime: 1535731200000,
+            updateTime: 1535731200000,
             username: "mycloud",
             md5: "f1098091bf7c85bd106c412b1769d5c2",
             fileLength: 163740,
@@ -124,7 +117,6 @@
       },
     },
     components: {
-      'sort-badge-wall': sortBadgeWall,
       'own-table': ownTable,
       'own-img-wall': ownImgWall,
       'pagination': pagination,

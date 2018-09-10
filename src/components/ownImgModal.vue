@@ -37,9 +37,9 @@
     </b-container>
 
     <div slot="modal-footer">
-      <b-btn size="sm" class="float-right" variant="outline-secondary" @click="hideModel">取消</b-btn>
-      <b-btn size="sm" class="float-right" variant="outline-warning" @click="changeOwn">保存</b-btn>
-      <b-btn size="sm" class="float-right" variant="outline-danger" @click="removeOwn">删除</b-btn>
+      <b-btn size="sm" variant="outline-secondary" @click="hideModel">取消</b-btn>
+      <b-btn size="sm" variant="outline-warning" @click="changeOwn">保存</b-btn>
+      <b-btn size="sm" variant="outline-danger" @click="removeOwn">删除</b-btn>
     </div>
   </b-modal>
 </template>
@@ -70,8 +70,8 @@
             fileName: "5b7bb5dd4f0df.png",
             sort: "动漫",
             description: null,
-            createTime: 1535866954000,
-            updateTime: 1535866954000,
+            createTime: 1535731200000,
+            updateTime: 1535731200000,
             username: "mycloud",
             md5: "4a2599540220af6579e287bcd96a7c35",
             fileLength: 163740,

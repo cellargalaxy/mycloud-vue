@@ -26,7 +26,7 @@ function changeUser(user) {
   if (!axios.logined()) {
     return axios.createEmtryAxios()
   }
-  if (util.checkParameterAnd('确认修改账号？', own, 'userId')) {
+  if (util.checkParameterAnd('确认修改账号？', user, 'userId')) {
     return userUserApi.changeUser(user.userId, user.username, user.userPassword)
   }
   return axios.createEmtryAxios()

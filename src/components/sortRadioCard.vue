@@ -2,18 +2,18 @@
   <b-row>
     <b-col>
       <b-card>
-        <b-button @click="chooseSort(null)" size="sm" variant="link">取消选择</b-button>
+        <b-button @click="chooseSort(null)" size="sm" variant="link">取消选择分类</b-button>
         <b-form-radio-group v-model="sort" :options="sorts" @input="chooseSort"/>
       </b-card>
     </b-col>
   </b-row>
 </template>
 
-<!-- <sort-badge-wall @chooseSort="chooseSort" :sorts="sorts"/> -->
+<!-- <sort-radio-card @chooseSort="chooseSort" :sorts="sorts"/> -->
 
 <script>
   export default {
-    name: "sortBadgeWall",
+    name: "sortRadioCard",
     data() {
       return {
         sort: null,

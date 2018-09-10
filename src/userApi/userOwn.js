@@ -69,6 +69,6 @@ export default {
   createOwnQuery: createOwnQuery,
   getOwnCount: getOwnCount,
   listOwn: listOwn,
-  listAllSort: listAllSort,
+  listSort: listAllSort,
   changeOwn: changeOwn,
 }

@@ -23,7 +23,10 @@ function removeAllLocalFile() {
   if (!axios.logined()) {
     return axios.createEmtryAxios()
   }
-  return adminFileApi.removeAllLocalFile()
+  if (util.confirmBox('确认删除全部本地文件？')) {
+    return adminFileApi.removeAllLocalFile()
+  }
+  return axios.createEmtryAxios()
 }
 
 export default {

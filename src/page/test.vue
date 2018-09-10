@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import navbar from '../components/ownTable'
+  import navbar from '../components/permissionTable'
 
   export default {
     name: "test",

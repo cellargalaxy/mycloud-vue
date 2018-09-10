@@ -10,16 +10,16 @@
 
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
-        <my-nav-item v-show="hasPermission('USER')" :title="'上传文件'" :url="'/user/uploadFile'"/>
+        <my-nav-item v-show="hasPermission('USER')" :title="'查询上传'" :url="'/user/queryUploadFile'"/>
         <my-nav-item v-show="hasPermission('USER')" :title="'文件管理'" :url="'/user/own'"/>
         <my-nav-item v-show="hasPermission('USER')" :title="'个人主页'" :url="'/user/user'"/>
-        <my-nav-item v-show="hasPermission('ADMIN')" :title="'所属管理'" :url="'/admin/fileInfoOwn'"/>
-        <my-nav-item v-show="hasPermission('ADMIN')" :title="'文件配置'" :url="'/admin/file'"/>
-        <my-nav-item v-show="hasPermission('ADMIN')" :title="'异常日志'" :url="'/admin/exceptionInfo'"/>
+        <my-nav-item v-show="hasPermission('ADMIN')" :title="'所属管理'" :url="'/admin/own'"/>
+        <my-nav-item v-show="hasPermission('ADMIN')" :title="'文件配置'" :url="'/admin/driveInfo'"/>
         <my-nav-item v-show="hasPermission('ADMIN')" :title="'任务日志'" :url="'/admin/task'"/>
+        <my-nav-item v-show="hasPermission('ADMIN')" :title="'异常日志'" :url="'/admin/exceptionInfo'"/>
         <my-nav-item v-show="hasPermission('ROOT')" :title="'用户管理'" :url="'/admin/user'"/>
-        <my-nav-item v-show="hasPermission('ROOT')" :title="'授权管理'" :url="'/admin/userAuthorization'"/>
         <my-nav-item v-show="hasPermission('ROOT')" :title="'权限管理'" :url="'/admin/permission'"/>
+        <my-nav-item v-show="hasPermission('ROOT')" :title="'授权管理'" :url="'/admin/userAuthorization'"/>
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto">
@@ -37,6 +37,8 @@
 
   </b-navbar>
 </template>
+
+<!--<navbar/>-->
 
 <script>
   import util from '../utils/util'

@@ -36,9 +36,20 @@ function listAllPermissionAuthorization() {
   return adminPermissionApi.listPermissionAuthorization(100, 1, 0, null, null, null)
 }
 
+function changePermission(permission) {
+  if (!axios.logined()) {
+    return axios.createEmtryAxios()
+  }
+  if (util.checkParameterAnd('确认修改权限？', permission, 'permissionId', 'permissionName')) {
+    return adminPermissionApi.changePermission(permission.permissionId, permission.permissionName)
+  }
+  return axios.createEmtryAxios()
+}
+
 export default {
   addPermission: addPermission,
   removePermission: removePermission,
   listAllPermission: listAllPermission,
   listAllPermissionAuthorization: listAllPermissionAuthorization,
+  changePermission: changePermission,
 }

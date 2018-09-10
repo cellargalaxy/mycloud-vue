@@ -44,7 +44,7 @@ function removeTask(task) {
 }
 
 function createTaskQuery() {
-  return {pageSize: 100, page: 1, taskId: 0, userId: 0, taskSort: null, status: 0}
+  return {pageSize: 20, page: 1, taskId: 0, userId: 0, taskSort: null, status: 0}
 }
 
 function listTask(taskQuery) {
