@@ -1,23 +1,24 @@
 <template>
-  <b-pagination :total-rows="total" :per-page="pageSize" v-model="currentPage" @change="change" align="center"></b-pagination>
+  <b-pagination :total-rows="total" :per-page="pageSize" v-model="currentPage" @change="turnPage"
+                align="center"/>
 </template>
 
- <!--  <pagination @turnPage="turnPage" :total="total" :pageSize="pageSize"/> -->
+<pagination @turnPage="turnPage" :total="total" :pageSize="pageSize"/>
 
 <script>
   export default {
     name: "pagination",
+    props: ['total', 'pageSize'],
     data() {
       return {
         currentPage: 1
       }
     },
     methods: {
-      change: function (page) {
+      turnPage: function (page) {
         this.$emit('turnPage', page)
       },
     },
-    props: ['total', 'pageSize'],
   }
 </script>
 

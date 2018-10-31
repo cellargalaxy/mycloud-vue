@@ -2,102 +2,53 @@ import axios from '../utils/axios'
 
 const url = '/admin/fileInfo'
 
-function removeFileInfo(fileId) {
-  return axios.instance.post(url + '/removeFileInfo', {
-    fileId: fileId,
-    md5: null,
-    fileLength: null,
-    contentType: null,
-    createTime: null
-  })
-}
-
 function getFileInfo(fileId, md5) {
-  return axios.instance.get(url + '/getFileInfo', {params: {fileId: fileId, md5: md5}})
+  return axios.tokenAxiosMethod.get(url + '/getFileInfo', {fileId: fileId, md5: md5})
 }
 
-function getFileInfoCount(pageSize, page, fileId, md5, fileLength, contentType, createTime, updateTime) {
-  return axios.instance.get(url + '/getFileInfoCount', {
-    params: {
-      pageSize: pageSize,
-      page: page,
-      fileId: fileId,
-      md5: md5,
-      fileLength: fileLength,
-      contentType: contentType,
-      createTime: createTime,
-      updateTime: updateTime
-    }
+function getFileInfoVo(fileId, md5) {
+  return axios.tokenAxiosMethod.get(url + '/getFileInfoVo', {fileId: fileId, md5: md5})
+}
+
+function listFileInfo(pageSize, page, fileId, md5, contentType) {
+  return axios.tokenAxiosMethod.get(url + '/listFileInfo', {
+    pageSize: pageSize,
+    page: page,
+    fileId: fileId,
+    md5: md5,
+    contentType: contentType,
   })
 }
 
-function listFileInfo(pageSize, page, fileId, md5, fileLength, contentType, createTime, updateTime) {
-  return axios.instance.get(url + '/listFileInfo', {
-    params: {
-      pageSize: pageSize,
-      page: page,
-      fileId: fileId,
-      md5: md5,
-      fileLength: fileLength,
-      contentType: contentType,
-      createTime: createTime,
-      updateTime: updateTime
-    }
+function listFileInfoVo(pageSize, page, fileId, md5, contentType) {
+  return axios.tokenAxiosMethod.get(url + '/listFileInfoVo', {
+    pageSize: pageSize,
+    page: page,
+    fileId: fileId,
+    md5: md5,
+    contentType: contentType,
   })
 }
 
-function getFileInfoOwn(fileId, md5) {
-  return axios.instance.get(url + '/getFileInfoOwn', {params: {fileId: fileId, md5: md5}})
-}
-
-function listFileInfoOwn(pageSize, page, fileId, md5, fileLength, contentType, createTime, updateTime) {
-  return axios.instance.get(url + '/listFileInfoOwn', {
-    params: {
-      pageSize: pageSize,
-      page: page,
-      fileId: fileId,
-      md5: md5,
-      fileLength: fileLength,
-      contentType: contentType,
-      createTime: createTime,
-      updateTime: updateTime
-    }
+function getFileInfoCount(pageSize, page, fileId, md5, contentType) {
+  return axios.tokenAxiosMethod.get(url + '/getFileInfoCount', {
+    pageSize: pageSize,
+    page: page,
+    fileId: fileId,
+    md5: md5,
+    contentType: contentType,
   })
 }
 
 function listContentType() {
-  return axios.instance.get(url + '/listContentType', {params: {}})
-}
-
-function checkAddFileInfo(md5, fileLength, contentType) {
-  return axios.instance.get(url + '/checkAddFileInfo', {
-    params: {
-      md5: md5,
-      fileLength: fileLength,
-      contentType: contentType
-    }
-  })
-}
-
-function checkChangeFileInfo(fileId, md5, fileLength, contentType) {
-  return axios.instance.get(url + '/checkChangeFileInfo', {
-    params: {
-      fileId: fileId,
-      md5: md5,
-      fileLength: fileLength,
-      contentType: contentType
-    }
-  })
+  return axios.tokenAxiosMethod.get(url + '/listContentType', {})
 }
 
 export default {
-  removeFileInfo: removeFileInfo,
   getFileInfo: getFileInfo,
-  getFileInfoCount: getFileInfoCount,
+  getFileInfoVo: getFileInfoVo,
   listFileInfo: listFileInfo,
-  getFileInfoOwn: getFileInfoOwn,
-  listFileInfoOwn: listFileInfoOwn,
+  listFileInfoVo: listFileInfoVo,
+  getFileInfoCount: getFileInfoCount,
   listContentType: listContentType,
-  checkAddFileInfo: checkAddFileInfo,
-  checkChangeFileInfo: checkChangeFileInfo,
 }

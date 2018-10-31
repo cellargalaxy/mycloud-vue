@@ -1,38 +1,40 @@
+import util from '../utils/util'
+import account from '../utils/account'
+import axios from '../utils/axios'
 import userFileApi from './userFileApi'
-import axios from "../utils/axios";
-import util from "../utils/util";
 
-function uploadFile(files, sort, description) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+function uploadFile(file, sort, description) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (files == null || files.length == 0) {
-    util.errorInfo('未选择文件')
-    return axios.createEmtryAxios()
+  if (util.checkParameterAnd(null, {file: file, sort: sort}, 'file', 'sort')) {
+    return userFileApi.uploadFile(file, sort, description)
   }
-  if (sort == null || sort == '') {
-    util.errorInfo('分类不能为空')
-    return axios.createEmtryAxios()
+  return axios.createEmptyResponse()
+}
+
+function submitUrl(url, sort, description) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  var newFiles = files
-  // for (let i = 0; i < files.length; i++) {
-  //   userFileInfo.getFileInfo({md5: null})
-  //     .then(res => {
-  //       var fileInfo = res.data.data
-  //       if (fileInfo == null) {
-  //         newFiles.push(files[i])
-  //       } else {
-  //         userOwn.addOwn({fileId: fileInfo.fileId, fileName: files[i].fileName, sort: sort, description: description})
-  //       }
-  //     })
-  // }
-  // if (newFiles.length == 0) {
-  //   util.errorInfo('上传成功')
-  //   return axios.createEmtryAxios()
-  // }
-  return userFileApi.uploadFile(newFiles, sort, description)
+  if (util.checkParameterAnd(null, {url: url, sort: sort}, 'url', 'sort')) {
+    return userFileApi.submitUrl(url, sort, description)
+  }
+  return axios.createEmptyResponse()
+}
+
+function downloadTar() {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return userFileApi.downloadTar()
 }
 
 export default {
   uploadFile: uploadFile,
+  submitUrl: submitUrl,
+  downloadTar: downloadTar,
 }

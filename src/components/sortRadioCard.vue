@@ -2,14 +2,18 @@
   <b-row>
     <b-col>
       <b-card>
-        <b-button @click="chooseSort(null)" size="sm" variant="link">取消选择分类</b-button>
-        <b-form-radio-group v-model="sort" :options="sorts" @input="chooseSort"/>
+        <b-form-radio-group v-model="sort">
+          <b-form-radio :value="null" @change="chooseSort">取消选择</b-form-radio>
+          <b-form-radio v-for="(sort,sortIndex) in sorts" :key="sortIndex" :value="sort" @change="chooseSort">
+            {{sort}}
+          </b-form-radio>
+        </b-form-radio-group>
       </b-card>
     </b-col>
   </b-row>
 </template>
 
-<!-- <sort-radio-card @chooseSort="chooseSort" :sorts="sorts"/> -->
+<sort-radio-card @chooseSort="chooseSort" :sorts="sorts"/>
 
 <script>
   export default {

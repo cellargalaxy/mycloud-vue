@@ -34,9 +34,12 @@ function formatFileSize(bytes) {
 }
 
 //读cookie
-function getCookie(name) {
+function getCookieFromString(cookieString, name) {
+  if (cookieString == null) {
+    return null
+  }
   var nameEQ = name + '='
-  var ca = document.cookie.split(';')
+  var ca = cookieString.split(';')
   for (var i = 0; i < ca.length; i++) {
     var c = ca[i]
     while (c.charAt(0) == ' ') c = c.substring(1, c.length)
@@ -45,25 +48,53 @@ function getCookie(name) {
   return null
 }
 
+function getCookie(name) {
+  if (!inBrowser()) {
+    return null
+  }
+  return getCookieFromString(document.cookie, name)
+}
+
 //写cookie
 function setCookie(key, value) {
-  var date = new Date()
-  date.setTime(date.getTime() + (1000 * 60 * 60 * 6))
-  document.cookie = key + '=' + value + '; expires=' + date.toGMTString()
+  if (inBrowser()) {
+    var date = new Date()
+    date.setTime(date.getTime() + (1000 * 60 * 60 * 24 * 365 * 10))
+    document.cookie = key + '=' + value + '; expires=' + date.toGMTString()
+  }
 }
 
 //成功信息弹框
 function successInfo(info) {
-  alert(info)
+  if (inBrowser()) {
+    alert(info)
+  }
 }
 
 //失败信息弹框
 function errorInfo(info) {
-  alert(info)
+  if (inBrowser()) {
+    alert(info)
+  }
 }
 
 function confirmBox(message) {
-  return confirm(message)
+  if (inBrowser()) {
+    return confirm(message)
+  }
+  return true
+}
+
+function exitWarm(message) {
+  if (inBrowser()) {
+    window.onbeforeunload = function () {
+      return message;
+    }
+  }
+}
+
+function inBrowser() {
+  return typeof(window) !== 'undefined'
 }
 
 //检查参数并通过询问框询问
@@ -146,11 +177,13 @@ export default {
   formatTimestamp: formatTimestamp,
   formatDate: formatDate,
   formatFileSize: formatFileSize,
+  getCookieFromString: getCookieFromString,
   getCookie: getCookie,
   setCookie: setCookie,
   successInfo: successInfo,
   errorInfo: errorInfo,
   confirmBox: confirmBox,
+  exitWarm: exitWarm,
   checkParameterAnd: checkParameterAnd,
   checkParameterOr: checkParameterOr,
   checkQueryParameter: checkQueryParameter,

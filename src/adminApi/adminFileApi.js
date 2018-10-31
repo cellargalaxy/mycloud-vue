@@ -2,20 +2,15 @@ import axios from '../utils/axios'
 
 const url = '/admin/file'
 
-function getDriveInfo() {
-  return axios.instance.get(url + '/getDriveInfo', {params: {}})
+function removeFile(fileId, md5) {
+  return axios.tokenAxiosMethod.post(url + '/removeFile', {fileId: fileId, md5: md5})
 }
 
-function removeFile(fileId) {
-  return axios.instance.post(url + '/removeFile', {fileId: fileId})
-}
-
-function removeAllLocalFile() {
-  return axios.instance.post(url + '/removeAllLocalFile', {})
+function downloadTar() {
+  return axios.tokenAxiosMethod.get(url + '/downloadTar', {})
 }
 
 export default {
-  getDriveInfo: getDriveInfo,
   removeFile: removeFile,
-  removeAllLocalFile: removeAllLocalFile,
+  downloadTar: downloadTar,
 }

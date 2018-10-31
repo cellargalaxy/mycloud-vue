@@ -2,106 +2,77 @@ import axios from '../utils/axios'
 
 const url = '/admin/own'
 
-function addOwn(userId, fileId, fileName, sort, description) {
-  return axios.instance.post(url + '/addOwn', {
+function addOwn(userId, fileId, fileLength, contentType, fileName, sort, description) {
+  return axios.tokenAxiosMethod.post(url + '/addOwn', {
     userId: userId,
     fileId: fileId,
+    fileLength: fileLength,
+    contentType: contentType,
     fileName: fileName,
     sort: sort,
     description: description
   })
 }
 
-function removeOwn(ownId, userId, fileId, fileName, sort, description, createTime, updateTime) {
-  return axios.instance.post(url + '/removeOwn', {
+function removeOwn(ownId, ownUuid) {
+  return axios.tokenAxiosMethod.post(url + '/removeOwn', {
     ownId: ownId,
+    ownUuid: ownUuid,
+  })
+}
+
+function changeOwn(ownId, ownUuid, userId, fileId, fileLength, contentType, fileName, sort, description) {
+  return axios.tokenAxiosMethod.post(url + '/changeOwn', {
+    ownId: ownId,
+    ownUuid: ownUuid,
     userId: userId,
     fileId: fileId,
-    fileName: fileName,
-    sort: sort,
-    description: description,
-    createTime: createTime,
-    updateTime: updateTime
-  })
-}
-
-function getOwn(ownId) {
-  return axios.instance.get(url + '/getOwn', {params: {ownId: ownId}})
-}
-
-function getOwnCount(pageSize, page, ownId, userId, fileId, fileName, sort, description, createTime, updateTime) {
-  return axios.instance.get(url + '/getOwnCount', {
-    params: {
-      pageSize: pageSize,
-      page: page,
-      ownId: ownId,
-      userId: userId,
-      fileId: fileId,
-      fileName: fileName,
-      sort: sort,
-      description: description,
-      createTime: createTime,
-      updateTime: updateTime
-    }
-  })
-}
-
-
-function listOwn(pageSize, page, ownId, userId, fileId, fileName, sort, description, createTime, updateTime) {
-  return axios.instance.get(url + '/listOwn', {
-    params: {
-      pageSize: pageSize,
-      page: page,
-      ownId: ownId,
-      userId: userId,
-      fileId: fileId,
-      fileName: fileName,
-      sort: sort,
-      description: description,
-      createTime: createTime,
-      updateTime: updateTime
-    }
-  })
-}
-
-function listSort(userId) {
-  return axios.instance.get(url + '/listSort', {params: {userId: userId}})
-}
-
-function changeOwn(ownId, userId, fileId, fileName, sort, description) {
-  return axios.instance.post(url + '/changeOwn', {
-    ownId: ownId,
-    userId: userId,
-    fileId: fileId,
+    fileLength: fileLength,
+    contentType: contentType,
     fileName: fileName,
     sort: sort,
     description: description
   })
 }
 
-function checkAddOwn(userId, fileId, fileName, sort, description) {
-  return axios.instance.get(url + '/checkAddOwn', {
+function getOwn(ownId, ownUuid) {
+  return axios.tokenAxiosMethod.get(url + '/getOwn', {ownId: ownId, ownUuid: ownUuid})
+}
+
+function listOwn(pageSize, page, ownId, ownUuid, userId, fileId, contentType, fileName, sort) {
+  return axios.tokenAxiosMethod.get(url + '/listOwn', {
     params: {
+      pageSize: pageSize,
+      page: page,
+      ownId: ownId,
+      ownUuid: ownUuid,
       userId: userId,
       fileId: fileId,
+      contentType:contentType,
       fileName: fileName,
       sort: sort,
-      description: description
     }
   })
 }
 
-function checkChangeOwn(ownId, userId, fileId, fileName, sort, description) {
-  return axios.instance.get(url + '/checkChangeOwn', {
+function getOwnCount(pageSize, page, ownId, ownUuid, userId, fileId, contentType, fileName, sort) {
+  return axios.tokenAxiosMethod.get(url + '/getOwnCount', {
     params: {
+      pageSize: pageSize,
+      page: page,
       ownId: ownId,
+      ownUuid: ownUuid,
       userId: userId,
       fileId: fileId,
+      contentType:contentType,
       fileName: fileName,
       sort: sort,
-      description: description
     }
   })
+}
+
+function listSort() {
+  return axios.tokenAxiosMethod.get(url + '/listSort', {})
 }
 
 export default {
@@ -112,6 +83,4 @@ export default {
   listOwn: listOwn,
   listSort: listSort,
   changeOwn: changeOwn,
-  checkAddOwn: checkAddOwn,
-  checkChangeOwn: checkChangeOwn,
 }

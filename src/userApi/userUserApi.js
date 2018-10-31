@@ -2,49 +2,19 @@ import axios from '../utils/axios'
 
 const url = '/user/user'
 
-function getUser(userId, username, createTime, updateTime) {
-  return axios.instance.get(url + '/getUser', {
-    params: {
-      userId: userId,
-      username: username,
-      createTime: createTime,
-      updateTime: updateTime
-    }
-  })
+function getUserVo() {
+  return axios.tokenAxiosMethod.get(url + '/getUserVo', {})
 }
 
-function getUserAuthorization(userId, username, createTime, updateTime) {
-  return axios.instance.get(url + '/getUserAuthorization', {
-    params: {
-      userId: userId,
-      username: username,
-      createTime: createTime,
-      updateTime: updateTime
-    }
-  })
-}
-
-function changeUser(userId, username, userPassword) {
-  return axios.instance.post(url + '/changeUser', {
+function changeUser(userId, username, password) {
+  return axios.tokenAxiosMethod.post(url + '/changeUser', {
     userId: userId,
     username: username,
-    userPassword: userPassword
-  })
-}
-
-function checkChangeUser(userId, username, userPassword) {
-  return axios.instance.get(url + '/checkChangeUser', {
-    params: {
-      userId: userId,
-      username: username,
-      userPassword: userPassword
-    }
+    password: password
   })
 }
 
 export default {
-  getUser: getUser,
-  getUserAuthorization: getUserAuthorization,
+  getUserVo: getUserVo,
   changeUser: changeUser,
-  checkChangeUser: checkChangeUser,
 }

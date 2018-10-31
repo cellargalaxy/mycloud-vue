@@ -1,39 +1,29 @@
 import userUserApi from './userUserApi'
-import axios from "../utils/axios";
+import account from "../utils/account";
 import util from "../utils/util";
+import axios from "../utils/axios";
 
-function getUser(user) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+function getUserVo() {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkParameterOr(null, own, 'userId', 'username')) {
-    return userUserApi.getUser(user.userId, user.username, null, null)
-  }
-  return axios.createEmtryAxios()
-}
-
-function getUserAuthorization(user) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
-  }
-  if (util.checkParameterOr(null, own, 'userId', 'username')) {
-    return userUserApi.getUserAuthorization(user.userId, user.username, null, null)
-  }
-  return axios.createEmtryAxios()
+  return userUserApi.getUserVo()
 }
 
 function changeUser(user) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
   if (util.checkParameterAnd('确认修改账号？', user, 'userId')) {
-    return userUserApi.changeUser(user.userId, user.username, user.userPassword)
+    return userUserApi.changeUser(user.userId, user.username, user.password)
   }
-  return axios.createEmtryAxios()
+  return axios.createEmptyResponse()
 }
 
 export default {
-  getUser: getUser,
-  getUserAuthorization: getUserAuthorization,
+  getUserVo: getUserVo,
   changeUser: changeUser,
 }
+

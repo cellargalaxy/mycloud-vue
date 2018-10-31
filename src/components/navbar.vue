@@ -13,12 +13,7 @@
         <my-nav-item v-show="hasPermission('USER')" :title="'查询上传'" :url="'/user/queryUploadFile'"/>
         <my-nav-item v-show="hasPermission('USER')" :title="'文件管理'" :url="'/user/own'"/>
         <my-nav-item v-show="hasPermission('USER')" :title="'个人主页'" :url="'/user/user'"/>
-        <my-nav-item v-show="hasPermission('ADMIN')" :title="'所属管理'" :url="'/admin/own'"/>
-        <my-nav-item v-show="hasPermission('ADMIN')" :title="'文件配置'" :url="'/admin/driveInfo'"/>
-        <my-nav-item v-show="hasPermission('ADMIN')" :title="'任务日志'" :url="'/admin/task'"/>
-        <my-nav-item v-show="hasPermission('ADMIN')" :title="'异常日志'" :url="'/admin/exceptionInfo'"/>
         <my-nav-item v-show="hasPermission('ROOT')" :title="'用户管理'" :url="'/admin/user'"/>
-        <my-nav-item v-show="hasPermission('ROOT')" :title="'权限管理'" :url="'/admin/permission'"/>
         <my-nav-item v-show="hasPermission('ROOT')" :title="'授权管理'" :url="'/admin/userAuthorization'"/>
       </b-navbar-nav>
 
@@ -38,10 +33,12 @@
   </b-navbar>
 </template>
 
-<!--<navbar/>-->
+<navbar/>
 
 <script>
   import util from '../utils/util'
+  import account from '../utils/account'
+  import userUser from '../userApi/userUser'
   import publicApi from '../commonApi/publicApi'
   import myNavItem from './myNavItem'
 
@@ -50,30 +47,28 @@
     data() {
       return {
         loginForm: {username: null, password: null},
-        token: null,
-        userAuthorization: null,
+        userVo: null,
       }
     },
     created: function () {
-      this.getUserAuthorization()
+      this.userVo = account.getAccount()
+      if (this.userVo == null) {
+        this.logout()
+      }
     },
     computed: {
       logined: function () {
-        return this.userAuthorization != null
+        return account.logined()
       }
     },
     methods: {
-      getUserAuthorization() {
-        this.userAuthorization = publicApi.getCurrentUserAuthorization()
-        if (this.userAuthorization == null) {
-          publicApi.getUserAuthorization(this.token, this.loginForm.username)
-            .then(res => {
-              if (res.data.status != 1) {
-                util.errorInfo(res.data.massage)
-                return
-              }
-              this.userAuthorization = res.data.data
-              publicApi.setLogin(this.userAuthorization)
+      getAccount() {
+        this.userVo = account.getAccount()
+        if (this.userVo == null) {
+          userUser.getUserVo()
+            .then(data => {
+              this.userVo = data.data
+              account.setAccount(this.userVo)
               util.successInfo('登录成功')
             })
             .catch(error => {
@@ -82,11 +77,11 @@
         }
       },
       hasPermission: function (permission) {
-        if (this.userAuthorization == null || this.userAuthorization.authorizations == null) {
+        if (this.userVo == null || this.userVo.authorizations == null) {
           return false;
         }
-        for (let i = 0; i < this.userAuthorization.authorizations.length; i++) {
-          if (this.userAuthorization.authorizations[i].permissionName == permission) {
+        for (let i = 0; i < this.userVo.authorizations.length; i++) {
+          if (this.userVo.authorizations[i].permission == permission) {
             return true;
           }
         }
@@ -95,19 +90,19 @@
       login: function (evt) {
         evt.preventDefault();
         publicApi.login(this.loginForm.username, this.loginForm.password)
-          .then(res => {
-            this.token = res.data.data
-            this.getUserAuthorization()
+          .then(data => {
+            account.setToken(data.data)
+            this.getAccount()
           })
       },
       logout: function () {
         this.loginForm = {username: null, password: null}
-        this.userAuthorization = null
-        publicApi.setLogout()
+        this.userVo = null
+        account.logout()
       },
     },
     components: {
-      'my-nav-item': myNavItem,
+      myNavItem,
     },
   }
 </script>

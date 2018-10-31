@@ -1,36 +1,33 @@
-import util from '../utils/util'
-import axios from '../utils/axios'
 import adminFileApi from './adminFileApi'
-
-function getDriveInfo() {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
-  }
-  return adminFileApi.getDriveInfo()
-}
+import account from "../utils/account";
+import util from "../utils/util";
+import axios from "../utils/axios";
 
 function removeFile(fileInfo) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkParameterAnd('？！？！确认【删除】文件？！？！', fileInfo, 'fileId')) {
-    return adminFileApi.removeFile(fileInfo.fileId)
+  if (util.checkParameterOr('？？》确认删除文件（3）《？？', fileInfo, 'fileId', 'md5')) {
+    if (util.checkParameterOr('？？》确认删除文件（2）《？？', fileInfo, 'fileId', 'md5')) {
+      if (util.checkParameterOr('？？》确认删除文件（1）《？？', fileInfo, 'fileId', 'md5')) {
+        return adminFileApi.removeFile(fileInfo.fileId, fileInfo.md5)
+      }
+    }
   }
-  return axios.createEmtryAxios()
+  return axios.createEmptyResponse()
 }
 
-function removeAllLocalFile() {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+function downloadTar() {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.confirmBox('确认删除全部本地文件？')) {
-    return adminFileApi.removeAllLocalFile()
-  }
-  return axios.createEmtryAxios()
+  return adminFileApi.downloadTar()
 }
 
 export default {
-  getDriveInfo: getDriveInfo,
   removeFile: removeFile,
-  removeAllLocalFile: removeAllLocalFile,
+  downloadTar: downloadTar,
 }
+

@@ -2,7 +2,7 @@
   <b-nav-item :href="'#'+url" :active="this.$route.path==url">{{title}}</b-nav-item>
 </template>
 
-<!--<my-nav-item :title="title" :url="url"/>-->
+<my-nav-item :title="title" :url="url"/>
 
 <script>
   export default {

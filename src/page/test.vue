@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import navbar from '../components/permissionTable'
+  import navbar from '../components/uploadLayout'
 
   export default {
     name: "test",

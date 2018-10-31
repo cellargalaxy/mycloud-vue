@@ -1,74 +1,85 @@
-import axios from "../utils/axios";
 import userOwnApi from "./userOwnApi";
+import account from "../utils/account";
 import util from "../utils/util";
+import axios from "../utils/axios";
+
+function createOwnQuery() {
+  return {pageSize: 24, page: 1, ownId: 0, ownUuid: null, fileId: 0, contentType: null, fileName: null, sort: null}
+}
 
 function addOwn(own) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkParameterAnd('确认添加所属？', own, 'fileId', 'fileName', 'sort')) {
-    return userOwnApi.addOwn(own.fileId, own.fileName, own.sort, own.description)
+  if (util.checkParameterAnd('确认添加所属？', own, 'fileId', 'fileLength', 'contentType', 'fileName', 'sort')) {
+    return userOwnApi.addOwn(own.fileId, own.fileLength, own.contentType, own.fileName, own.sort, own.description)
   }
-  return axios.createEmtryAxios()
+  return axios.createEmptyResponse()
 }
 
 function removeOwn(own) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkParameterOr('确认删除所属？', own, 'fileId', 'fileName', 'sort')) {
-    return userOwnApi.removeOwn(own.fileId, own.fileName, own.sort, null, null, null)
+  if (util.checkParameterOr('确认删除所属？', own, 'ownId', 'ownUuid')) {
+    return userOwnApi.removeOwn(own.ownId, own.ownUuid)
   }
-  return axios.createEmtryAxios()
-}
-
-function createOwnQuery() {
-  return {pageSize: 20, page: 1, fileId: 0, fileName: null, sort: null}
-}
-
-function getOwnCount(ownQuery) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
-  }
-  if (util.checkQueryParameter(ownQuery)) {
-    return userOwnApi.getOwnCount(ownQuery.pageSize, ownQuery.page, ownQuery.fileId, ownQuery.fileName, ownQuery.sort, null, null, null)
-  }
-  return axios.createEmtryAxios()
-}
-
-function listOwn(ownQuery) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
-  }
-  if (util.checkQueryParameter(ownQuery)) {
-    return userOwnApi.listOwn(ownQuery.pageSize, ownQuery.page, ownQuery.fileId, ownQuery.fileName, ownQuery.sort, null, null, null)
-  }
-  return axios.createEmtryAxios()
-}
-
-function listAllSort() {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
-  }
-  return userOwnApi.listSort(100, 1, 0, null, null, null, null, null)
+  return axios.createEmptyResponse()
 }
 
 function changeOwn(own) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkParameterAnd('确认修改所属？', own, 'ownId')) {
-    return userOwnApi.changeOwn(own.ownId, own.userId, own.fileId, own.fileName, own.sort, own.description)
+  if (util.checkParameterOr('确认修改所属？', own, 'ownId', 'ownUuid')) {
+    return userOwnApi.changeOwn(own.ownId, own.ownUuid, own.fileId, own.fileLength, own.contentType, own.fileName, own.sort, own.description)
   }
-  return axios.createEmtryAxios()
+  return axios.createEmptyResponse()
 }
 
+function getOwn(own) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return userOwnApi.getOwn(own.ownId, own.ownUuid)
+}
+
+function listOwn(own) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return userOwnApi.listOwn(own.pageSize, own.page, own.ownId, own.ownUuid, own.fileId, own.contentType, own.fileName, own.sort)
+}
+
+function getOwnCount(own) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return userOwnApi.getOwnCount(own.pageSize, own.page, own.ownId, own.ownUuid, own.fileId, own.contentType, own.fileName, own.sort)
+}
+
+function listSort() {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return userOwnApi.listSort()
+}
+
+
 export default {
+  createOwnQuery: createOwnQuery,
   addOwn: addOwn,
   removeOwn: removeOwn,
-  createOwnQuery: createOwnQuery,
+  getOwn: getOwn,
   getOwnCount: getOwnCount,
   listOwn: listOwn,
-  listSort: listAllSort,
+  listSort: listSort,
   changeOwn: changeOwn,
 }

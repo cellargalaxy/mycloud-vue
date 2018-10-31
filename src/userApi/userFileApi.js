@@ -2,22 +2,24 @@ import axios from '../utils/axios'
 
 const url = '/user/file'
 
-function uploadFile(files, sort, description) {
+function uploadFile(file, sort, description) {
   const param = new FormData()
-  for (let i = 0; i < files.length; i++) {
-    param.append('files', files[i])
-  }
+  param.append('file', file)
   param.append('sort', sort)
   param.append('description', description)
-  const config = {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      'Authorization': axios.getToken()
-    }
-  }
-  return axios.baseAxios.post(axios.baseURL + url + '/uploadFile', param, config)
+  return axios.fileAxiosMethod.post(url + '/uploadFile', param)
+}
+
+function submitUrl(url, sort, description) {
+  return axios.tokenAxiosMethod.post(url + '/submitUrl', {url: url, sort: sort, description: description})
+}
+
+function downloadTar() {
+  return axios.tokenAxiosMethod.get(url + '/downloadTar', {})
 }
 
 export default {
   uploadFile: uploadFile,
+  submitUrl: submitUrl,
+  downloadTar: downloadTar,
 }

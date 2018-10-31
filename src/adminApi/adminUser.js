@@ -1,63 +1,88 @@
-import axios from '../utils/axios'
 import adminUserApi from './adminUserApi'
+import account from "../utils/account";
 import util from "../utils/util";
+import axios from "../utils/axios";
 
 function addUser(user) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkParameterAnd('确认添加用户？', user, 'username', 'userPassword')) {
-    return adminUserApi.addUser(user.username, user.userPassword)
+  if (util.checkParameterAnd('确认添加账号？', user, 'username', 'password')) {
+    return adminUserApi.addUser(user.username, user.password)
   }
-  return axios.createEmtryAxios()
+  return axios.createEmptyResponse()
 }
 
 function removeUser(user) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkParameterAnd('确认删除用户？', user, 'userId')) {
+  if (util.checkParameterAnd('确认删除账号？', user, 'userId')) {
     return adminUserApi.removeUser(user.userId)
   }
-  return axios.createEmtryAxios()
-}
-
-function listAllUser() {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
-  }
-  return adminUserApi.listUser(100, 1, 0, null, null, null)
-}
-
-function listAllUserAuthorization() {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
-  }
-  return adminUserApi.listUserAuthorization(100, 1, 0, null, null, null)
-}
-
-function listAllUserOwn() {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
-  }
-  return adminUserApi.listUserOwn(100, 1, 0, null, null, null)
+  return axios.createEmptyResponse()
 }
 
 function changeUser(user) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkParameterAnd('确认修改用户？', user, 'userId')) {
-    return adminUserApi.changeUser(user.userId, user.username, user.userPassword)
+  if (util.checkParameterAnd('确认修改账号？', user, 'userId')) {
+    return adminUserApi.changeUser(user.userId, user.username, user.password)
   }
-  return axios.createEmtryAxios()
+  return axios.createEmptyResponse()
+}
+
+function getUser(user) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return adminUserApi.getUser(user.userId, user.username)
+}
+
+function getUserVo(user) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return adminUserApi.getUserVo(user.userId, user.username)
+}
+
+function listAllUser() {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return adminUserApi.listAllUser()
+}
+
+function listAllUserVo() {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return adminUserApi.listAllUserVo()
+}
+
+function listAllPermission() {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return adminUserApi.listAllPermission()
 }
 
 export default {
   addUser: addUser,
   removeUser: removeUser,
-  listAllUser: listAllUser,
-  listAllUserAuthorization: listAllUserAuthorization,
-  listAllUserOwn: listAllUserOwn,
   changeUser: changeUser,
+  getUser: getUser,
+  getUserVo: getUserVo,
+  listAllUser: listAllUser,
+  listAllUserVo: listAllUserVo,
+  listAllPermission: listAllPermission,
 }

@@ -14,53 +14,49 @@
       </b-form-group>
 
       <b-form-group label="">
-        <b-form-textarea v-model="uploadFileForm.description" placeholder="描述" rows="3" maxlength="256"/>
+        <b-form-textarea v-model="uploadFileForm.description" placeholder="描述" rows="1" maxlength="256"/>
       </b-form-group>
 
-      <b-button type="submit" variant="primary" style="width: 100%" @click="uploadFile">上传</b-button>
+      <b-button type="submit" variant="primary" style="width: 100%" @click="upload">上传</b-button>
     </b-form>
   </b-card>
 </template>
 
-<!--<upload-file-card/>-->
+<upload-file-card @upload="upload" :sorts="sorts"/>
 
 <script>
   import util from '../utils/util'
-  import userFile from '../userApi/userFile'
-  import userOwn from '../userApi/userOwn'
 
   export default {
     name: "uploadFileCard",
+    props: {
+      sorts: {
+        default: function () {
+          return ['动漫', '电影', '游戏']
+        }
+      },
+    },
     data() {
       return {
-        sorts: [],
-        uploadFileForm: {
-          files: [],
-          sort: null,
-          description: null,
-        },
+        uploadFileForm: {files: [], sort: null, description: null,}
       }
     },
-    created: function () {
-      this.created()
-    },
     methods: {
-      created: function () {
-        this.listSort()
-      },
-      listSort: function () {
-        userOwn.listSort()
-          .then(res => {
-            this.sorts = res.data.data
+      upload: function () {
+        if (this.uploadFileForm.files == null || this.uploadFileForm.files.length == 0) {
+          util.errorInfo('还未选择任何文件')
+          return
+        }
+        for (let i = 0; i < this.uploadFileForm.files.length; i++) {
+          this.$emit('upload', {
+            file: this.uploadFileForm.files[i],
+            sort: this.uploadFileForm.sort,
+            description: this.uploadFileForm.description
           })
+        }
+        this.uploadFileForm = {files: [], sort: null, description: null,}
       },
-      uploadFile: function () {
-        userFile.uploadFile(this.uploadFileForm.files, this.uploadFileForm.sort, this.uploadFileForm.description)
-          .then(res => {
-            util.successInfo('上传成功')
-          })
-      },
-    }
+    },
   }
 </script>
 

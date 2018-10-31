@@ -1,72 +1,92 @@
 import adminOwnApi from './adminOwnApi'
-import axios from '../utils/axios'
+import account from "../utils/account";
 import util from "../utils/util";
+import axios from "../utils/axios";
+
+function createOwnQuery() {
+  return {
+    pageSize: 0,
+    page: 0,
+    ownId: 0,
+    ownUuid: null,
+    userId: 0,
+    fileId: 0,
+    contentType: null,
+    fileName: null,
+    sort: null
+  }
+}
 
 function addOwn(own) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkParameterAnd('确认添加所属？', own, 'userId', 'fileId', 'fileName', 'sort')) {
-    return adminOwnApi.addOwn(own.userId, own.fileId, own.fileName, own.sort, own.description)
+  if (util.checkParameterAnd('确认添加所属？', own, 'userId', 'fileId', 'fileLength', 'contentType', 'fileName', 'sort')) {
+    return adminOwnApi.addOwn(own.userId, own.fileId, own.fileLength, own.contentType, own.fileName, own.sort, own.description)
   }
-  return axios.createEmtryAxios()
+  return axios.createEmptyResponse()
 }
 
 function removeOwn(own) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkParameterOr('确认删除所属？', own, 'ownId', 'userId', 'fileId', 'fileName', 'sort')) {
-    return adminOwnApi.removeOwn(own.ownId, own.userId, own.fileId, own.fileName, own.sort, null, null, null)
+  if (util.checkParameterOr('确认删除所属？', own, 'ownId', 'ownUuid')) {
+    return adminOwnApi.removeOwn(own.ownId, own.ownUuid)
   }
-  return axios.createEmtryAxios()
-}
-
-function createOwnQuery() {
-  return {pageSize: 20, page: 1, ownId: 0, userId: 0, fileId: 0, fileName: null, sort: null}
-}
-
-function getOwnCount(ownQuery) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
-  }
-  if (util.checkQueryParameter(ownQuery)) {
-    return adminOwnApi.getOwnCount(ownQuery.pageSize, ownQuery.page, ownQuery.ownId, ownQuery.userId, ownQuery.fileId, ownQuery.fileName, ownQuery.sort, null, null, null)
-  }
-  return axios.createEmtryAxios()
-}
-
-function listOwn(ownQuery) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
-  }
-  if (util.checkQueryParameter(ownQuery)) {
-    return adminOwnApi.listOwn(ownQuery.pageSize, ownQuery.page, ownQuery.ownId, ownQuery.userId, ownQuery.fileId, ownQuery.fileName, ownQuery.sort, null, null, null)
-  }
-  return axios.createEmtryAxios()
-}
-
-function listSort(own) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
-  }
-  return adminOwnApi.listSort(own.userId)
+  return axios.createEmptyResponse()
 }
 
 function changeOwn(own) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkParameterAnd('确认修改所属？', own, 'ownId')) {
-    return adminOwnApi.changeOwn(own.ownId, own.userId, own.fileId, own.fileName, own.sort, own.description)
+  if (util.checkParameterOr('确认修改所属？', own, 'ownId', 'ownUuid')) {
+    return adminOwnApi.changeOwn(own.ownId, own.ownUuid, own.userId, own.fileId, own.fileLength, own.contentType, own.fileName, own.sort, own.description)
   }
-  return axios.createEmtryAxios()
+  return axios.createEmptyResponse()
+}
+
+function getOwn(own) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return adminOwnApi.getOwn(own.ownId, own.ownUuid)
+}
+
+function listOwn(own) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return adminOwnApi.listOwn(own.pageSize, own.page, own.ownId, own.ownUuid, own.userId, own.fileId, own.contentType, own.fileName, own.sort)
+}
+
+function getOwnCount(own) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return adminOwnApi.getOwnCount(own.pageSize, own.page, own.ownId, own.ownUuid, own.userId, own.fileId, own.contentType, own.fileName, own.sort)
+}
+
+function listSort() {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return adminOwnApi.listSort()
 }
 
 export default {
+  createOwnQuery: createOwnQuery,
   addOwn: addOwn,
   removeOwn: removeOwn,
-  createOwnQuery: createOwnQuery,
+  getOwn: getOwn,
   getOwnCount: getOwnCount,
   listOwn: listOwn,
   listSort: listSort,

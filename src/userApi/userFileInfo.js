@@ -1,15 +1,14 @@
-import axios from "../utils/axios";
 import userFileInfoApi from "./userFileInfoApi";
+import account from "../utils/account";
 import util from "../utils/util";
+import axios from "../utils/axios";
 
 function getFileInfo(fileInfo) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkParameterOr(null, fileInfo, 'fileId', 'md5')) {
-    return userFileInfoApi.getFileInfo(fileInfo.fileId, fileInfo.md5, 0, null, null)
-  }
-  return axios.createEmtryAxios()
+  return userFileInfoApi.getFileInfo(fileInfo.md5)
 }
 
 export default {

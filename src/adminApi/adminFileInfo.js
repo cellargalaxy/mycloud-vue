@@ -1,73 +1,66 @@
 import adminFileInfoApi from './adminFileInfoApi'
-import axios from "../utils/axios";
+import account from "../utils/account";
 import util from "../utils/util";
+import axios from "../utils/axios";
 
 function createFileInfoQuery() {
-  return {pageSize: 20, page: 1, fileId: 0, md5: null, contentType: null}
+  return {pageSize: 24, page: 0, fileId: 0, md5: null, contentType: null}
 }
 
-function getFileInfoCount(fileInfoQuery) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+function getFileInfo(fileInfo) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkQueryParameter(fileInfoQuery)) {
-    return adminFileInfoApi.getFileInfoCount(
-      fileInfoQuery.pageSize,
-      fileInfoQuery.page,
-      fileInfoQuery.fileId,
-      fileInfoQuery.md5,
-      0,
-      fileInfoQuery.contentType,
-      null, null)
-  }
-  return axios.createEmtryAxios()
+  return adminFileInfoApi.getFileInfo(fileInfo.fileId, fileInfo.md5)
 }
 
-function listFileInfo(fileInfoQuery) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+function getFileInfoVo(fileInfo) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkQueryParameter(fileInfoQuery)) {
-    return adminFileInfoApi.listFileInfo(
-      fileInfoQuery.pageSize,
-      fileInfoQuery.page,
-      fileInfoQuery.fileId,
-      fileInfoQuery.md5,
-      0,
-      fileInfoQuery.contentType,
-      null, null)
-  }
-  return axios.createEmtryAxios()
+  return adminFileInfoApi.getFileInfoVo(fileInfo.fileId, fileInfo.md5)
 }
 
-function listFileInfoOwn(fileInfoQuery) {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+function listFileInfo(fileInfo) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  if (util.checkQueryParameter(fileInfoQuery)) {
-    return adminFileInfoApi.listFileInfoOwn(
-      fileInfoQuery.pageSize,
-      fileInfoQuery.page,
-      fileInfoQuery.fileId,
-      fileInfoQuery.md5,
-      0,
-      fileInfoQuery.contentType,
-      null, null)
+  return adminFileInfoApi.listFileInfo(fileInfo.pageSize, fileInfo.page, fileInfo.fileId, fileInfo.md5, fileInfo.contentType)
+}
+
+function listFileInfoVo(fileInfo) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
-  return axios.createEmtryAxios()
+  return adminFileInfoApi.listFileInfoVo(fileInfo.pageSize, fileInfo.page, fileInfo.fileId, fileInfo.md5, fileInfo.contentType)
+}
+
+function getFileInfoCount(fileInfo) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  return adminFileInfoApi.getFileInfoCount(fileInfo.pageSize, fileInfo.page, fileInfo.fileId, fileInfo.md5, fileInfo.contentType)
 }
 
 function listContentType() {
-  if (!axios.logined()) {
-    return axios.createEmtryAxios()
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
   }
   return adminFileInfoApi.listContentType()
 }
 
 export default {
   createFileInfoQuery: createFileInfoQuery,
-  getFileInfoCount: getFileInfoCount,
+  getFileInfo: getFileInfo,
+  getFileInfoVo: getFileInfoVo,
   listFileInfo: listFileInfo,
-  listFileInfoOwn: listFileInfoOwn,
+  listFileInfoVo: listFileInfoVo,
+  getFileInfoCount: getFileInfoCount,
   listContentType: listContentType,
 }

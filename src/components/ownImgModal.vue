@@ -1,50 +1,54 @@
 <template>
-  <b-modal v-model="tmpShow" :title="'修改'+own.username+'的'+own.fileName" centered @hide="hideModel">
+  <b-modal v-model="tmpShow" :title="'修改'+own.username+'的'+own.fileName" centered @hide="setShow(false)">
     <b-container fluid>
-      <my-img :src="own.url"></my-img>
+      <my-img :src="own.ownUrl"/>
 
       <b-form @submit="changeOwn">
         <b-input-group prepend="文件名" size="sm">
-          <b-form-input v-model="own.fileName" type="text"></b-form-input>
+          <b-form-input v-model="own.fileName" type="text"/>
         </b-input-group>
 
         <b-input-group prepend="分类" size="sm">
-          <b-form-input v-model="own.sort" type="text"></b-form-input>
+          <b-form-input v-model="own.sort" type="text"/>
         </b-input-group>
 
         <b-input-group prepend="" size="sm">
-          <b-form-textarea v-model="own.description" rows="1" placeholder="描述"></b-form-textarea>
+          <b-form-textarea v-model="own.description" rows="1" placeholder="描述"/>
         </b-input-group>
 
         <b-input-group prepend="md5" size="sm">
-          <b-form-input :value="own.md5" readonly></b-form-input>
+          <b-form-input :value="own.md5" readonly/>
+        </b-input-group>
+
+        <b-input-group prepend="uuid" size="sm">
+          <b-form-input :value="own.ownUuid" readonly/>
         </b-input-group>
 
         <b-input-group prepend="url" size="sm">
-          <b-form-input :value="own.url" readonly></b-form-input>
+          <b-form-input :value="own.ownUrl" readonly/>
         </b-input-group>
 
         <b-input-group size="sm">
-          <b-form-input :value="own.fileLength" readonly></b-form-input>
-          <b-form-input :value="own.contentType" readonly></b-form-input>
+          <b-form-input :value="own.fileLength" readonly/>
+          <b-form-input :value="own.contentType" readonly/>
         </b-input-group>
 
         <b-input-group size="sm">
-          <b-form-input :value="own.createTime" readonly></b-form-input>
-          <b-form-input :value="own.updateTime" readonly></b-form-input>
+          <b-form-input :value="own.createTime" readonly/>
+          <b-form-input :value="own.updateTime" readonly/>
         </b-input-group>
       </b-form>
     </b-container>
 
     <div slot="modal-footer">
-      <b-btn size="sm" variant="outline-secondary" @click="hideModel">取消</b-btn>
-      <b-btn size="sm" variant="outline-warning" @click="changeOwn">保存</b-btn>
       <b-btn size="sm" variant="outline-danger" @click="removeOwn">删除</b-btn>
+      <b-btn size="sm" variant="outline-warning" @click="changeOwn">保存</b-btn>
+      <b-btn size="sm" variant="outline-secondary" @click="setShow(false)">取消</b-btn>
     </div>
   </b-modal>
 </template>
 
-<!-- <own-img-modal @changeOwn="changeOwn" @removeOwn="removeOwn" @hide="hide" :own="own" :show="show"/> -->
+<own-img-modal @changeOwn="changeOwn" @removeOwn="removeOwn" @setShow="setShow" :show="show" :own="own"/>
 
 <script>
   import common from '../commonApi/common'
@@ -52,64 +56,65 @@
 
   export default {
     name: "ownModal",
-    data() {
-      return {
-        tmpShow: this.show,
-      }
-    },
     props: {
       show: {
-        default: false
+        default: function () {
+          return true
+        }
       },
       own: {
         default: function () {
           return {
-            ownId: 0,
-            userId: 0,
-            fileId: 0,
-            fileName: "5b7bb5dd4f0df.png",
-            sort: "动漫",
-            description: null,
-            createTime: 1535731200000,
-            updateTime: 1535731200000,
-            username: "mycloud",
-            md5: "4a2599540220af6579e287bcd96a7c35",
-            fileLength: 163740,
-            contentType: "image/png",
-            url: "https://i.loli.net/2018/08/21/5b7bb5dd4f0df.png"
+            "ownId": 0,
+            "ownUuid": "fe9d5d59-5ae1-4382-afab-f1e53c109e45",
+            "userId": 0,
+            "fileId": 0,
+            "fileLength": 17141096,
+            "contentType": "image/png",
+            "fileName": "5b7bb5dd4f0df.png",
+            "sort": "sort",
+            "description": null,
+            "createTime": 1535731200000,
+            "updateTime": 1535731200000,
+            "username": "mycloud",
+            "md5": "4a2599540220af6579e287bcd96a7c35",
+            "md5Url": "https://i.loli.net/2018/08/21/5b7bb5dd4f0df.png",
+            "ownUrl": "https://i.loli.net/2018/08/21/5b7bb5dd4f0df.png"
           }
         }
       },
+    },
+    data() {
+      return {
+        tmpShow: this.show
+      }
     },
     watch: {
       show(val) {
         this.tmpShow = val
       },
-      tmpShow(val) {
-        this.$emit('hide', val)
-      },
       own(val) {
-        this.own = common.initOwn(val)
+        common.initOwn(val)
       },
     },
     created: function () {
-      this.own = common.initOwn(this.own)
+      common.initOwn(this.own)
     },
     methods: {
       changeOwn: function () {
         this.$emit('changeOwn', this.own)
-        this.tmpShow = false
+        this.setShow(false)
       },
       removeOwn: function () {
         this.$emit('removeOwn', this.own)
-        this.tmpShow = false
+        this.setShow(false)
       },
-      hideModel(evt) {
-        this.tmpShow = false
+      setShow(show) {
+        this.$emit('setShow', show)
       },
     },
     components: {
-      'my-img': myImg,
+      myImg,
     },
   }
 </script>

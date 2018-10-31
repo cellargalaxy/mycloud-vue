@@ -12,11 +12,11 @@
       <b-col sm="0" md="0" lg="1" xl="2"/>
       <b-col sm="12" md="12" lg="10" xl="8">
         <b-card
-                img-src="https://i.loli.net/2018/09/11/5b96976fb4a80.png"
-                img-alt="苍之萤"
-                text-variant="black"
-                title=""
-                sub-title="">
+          img-src="https://i.loli.net/2018/09/11/5b96976fb4a80.png"
+          img-alt="苍之萤"
+          text-variant="black"
+          title=""
+          sub-title="">
           <h2><b>我在这里的时候经常想，以前的人为什么总是留下记录呢？因为他们不想让有些事情发生改变。</b></h2>
           <p class="text-right"><b>——苍之萤</b></p>
         </b-card>
@@ -100,5 +100,4 @@
 </script>
 
 <style scoped>
-
 </style>
