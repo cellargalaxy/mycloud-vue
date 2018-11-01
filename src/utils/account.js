@@ -20,7 +20,7 @@ function getTokenFromCookieString(cookieString) {
 }
 
 function logined() {
-  return getToken() != null && getToken() != '' && getToken() != 'null' && getAccount() != null && getAccount() != '' && getAccount() != 'null'
+  return getToken() != null && getToken() != '' && getToken() != 'null'
 }
 
 const accountKey = 'account'

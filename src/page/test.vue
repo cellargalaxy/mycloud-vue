@@ -1,9 +1,9 @@
 <template>
-  <navbar></navbar>
+  <!--<navbar/>-->
 </template>
 
 <script>
-  import navbar from '../components/uploadLayout'
+  import navbar from '../components/userCard'
 
   export default {
     name: "test",
@@ -13,7 +13,7 @@
       }
     },
     components: {
-      'navbar': navbar,
+      navbar,
     },
   }
 </script>

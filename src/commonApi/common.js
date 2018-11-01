@@ -5,6 +5,9 @@ function isNumber(val) {
 }
 
 function initOwn(own) {
+  if (own == null) {
+    return
+  }
   if (isNumber(own.createTime)) {
     own.createTime = util.formatTimestamp(own.createTime, 'yyyy-MM-dd hh:mm:ss')
   }
@@ -18,6 +21,9 @@ function initOwn(own) {
 }
 
 function initFileInfo(fileInfo) {
+  if (fileInfo == null) {
+    return
+  }
   if (isNumber(fileInfo.createTime)) {
     fileInfo.createTime = util.formatTimestamp(fileInfo.createTime, 'yyyy-MM-dd hh:mm:ss')
   }
@@ -31,6 +37,9 @@ function initFileInfo(fileInfo) {
 }
 
 function initUser(user) {
+  if (user == null) {
+    return
+  }
   user.userPassword = null
   if (isNumber(user.createTime)) {
     user.createTime = util.formatTimestamp(user.createTime, 'yyyy-MM-dd hh:mm:ss')

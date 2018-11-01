@@ -48,7 +48,7 @@ function listOwn(pageSize, page, ownId, ownUuid, userId, fileId, contentType, fi
       ownUuid: ownUuid,
       userId: userId,
       fileId: fileId,
-      contentType:contentType,
+      contentType: contentType,
       fileName: fileName,
       sort: sort,
     }
@@ -64,7 +64,7 @@ function getOwnCount(pageSize, page, ownId, ownUuid, userId, fileId, contentType
       ownUuid: ownUuid,
       userId: userId,
       fileId: fileId,
-      contentType:contentType,
+      contentType: contentType,
       fileName: fileName,
       sort: sort,
     }

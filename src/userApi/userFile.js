@@ -3,24 +3,24 @@ import account from '../utils/account'
 import axios from '../utils/axios'
 import userFileApi from './userFileApi'
 
-function uploadFile(file, sort, description) {
+function uploadFile(uploadFileForm) {
   if (!account.logined()) {
     util.errorInfo('请登录')
     return axios.createEmptyResponse()
   }
-  if (util.checkParameterAnd(null, {file: file, sort: sort}, 'file', 'sort')) {
-    return userFileApi.uploadFile(file, sort, description)
+  if (util.checkParameterAnd(null, uploadFileForm, 'file', 'sort')) {
+    return userFileApi.uploadFile(uploadFileForm.file, uploadFileForm.sort, uploadFileForm.description)
   }
   return axios.createEmptyResponse()
 }
 
-function submitUrl(url, sort, description) {
+function submitUrl(uploadUrlForm) {
   if (!account.logined()) {
     util.errorInfo('请登录')
     return axios.createEmptyResponse()
   }
-  if (util.checkParameterAnd(null, {url: url, sort: sort}, 'url', 'sort')) {
-    return userFileApi.submitUrl(url, sort, description)
+  if (util.checkParameterAnd(null, uploadUrlForm, 'url', 'sort')) {
+    return userFileApi.submitUrl(uploadUrlForm.url, uploadUrlForm.sort, uploadUrlForm.description)
   }
   return axios.createEmptyResponse()
 }

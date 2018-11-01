@@ -59,7 +59,7 @@
           })
       },
       addOwn: function () {
-        this.own.fileId=this.fileInfo.fileId
+        this.own.fileId = this.fileInfo.fileId
         userOwn.addOwn(this.own)
           .then(res => {
             util.successInfo('添加成功')

@@ -1,22 +1,22 @@
 <template>
   <b-media>
     <div @click="setShow(true)" slot="aside" style="width: 10.3em;">
-      <my-img :src="form.own.ownUrl"/>
+      <multimedia :url="form.own!=null?form.own.ownUrl:''" :mime="form.own!=null?form.own.contentType:''"/>
     </div>
 
     <b-form>
       <b-input-group prepend="url" size="sm">
-        <b-form-input :value="form.own.ownUrl" readonly/>
+        <b-form-input :value="form.own!=null?form.own.ownUrl:''" readonly/>
       </b-input-group>
 
       <b-input-group size="sm">
-        <b-form-input :value="form.own.fileLength" readonly/>
-        <b-form-input :value="form.own.contentType" readonly/>
+        <b-form-input :value="form.own!=null?form.own.fileLength:''" readonly/>
+        <b-form-input :value="form.own!=null?form.own.contentType:''" readonly/>
       </b-input-group>
 
       <b-input-group size="sm">
-        <b-button :variant="form.uploadFunc==null?'outline-success':'outline-warning'" :disabled="form.uploadFunc==null"
-                  v-text="form.uploadFunc==null?'上传成功':'上传失败，重新上传'" @click="upload" style="width: 100%;" size="sm"/>
+        <b-button :variant="uploadSuccess?'outline-success':'outline-warning'" :disabled="uploadSuccess"
+                  v-text="uploadSuccess?'上传成功':'上传失败，重新上传'" @click="upload" style="width: 100%;" size="sm"/>
       </b-input-group>
     </b-form>
 
@@ -28,7 +28,8 @@
 
 <script>
   import util from '../utils/util'
-  import myImg from './myImg'
+  import common from '../commonApi/common'
+  import multimedia from './multimedia'
   import ownImgModal from './ownImgModal'
 
   export default {
@@ -58,9 +59,20 @@
         }
       },
     },
+    watch: {
+      form(val) {
+        common.initOwn(val.own)
+        this.uploadSuccess = val.own != null
+      },
+    },
+    created: function () {
+      common.initOwn(this.form.own)
+      this.uploadSuccess = this.form.own != null
+    },
     data() {
       return {
-        show: false
+        uploadSuccess: false,
+        show: false,
       }
     },
     methods: {
@@ -69,6 +81,7 @@
           .then(data => {
             this.form.own = data.data
             this.form.uploadFunc = null
+            this.uploadSuccess = true
             util.successInfo('上传成功')
           })
       },
@@ -77,7 +90,7 @@
       },
     },
     components: {
-      myImg,
+      multimedia,
       ownImgModal,
     },
   }

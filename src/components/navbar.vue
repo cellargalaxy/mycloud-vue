@@ -10,11 +10,9 @@
 
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
-        <my-nav-item v-show="hasPermission('USER')" :title="'查询上传'" :url="'/user/queryUploadFile'"/>
+        <my-nav-item v-show="hasPermission('USER')" :title="'上传文件'" :url="'/user/upload'"/>
         <my-nav-item v-show="hasPermission('USER')" :title="'文件管理'" :url="'/user/own'"/>
         <my-nav-item v-show="hasPermission('USER')" :title="'个人主页'" :url="'/user/user'"/>
-        <my-nav-item v-show="hasPermission('ROOT')" :title="'用户管理'" :url="'/admin/user'"/>
-        <my-nav-item v-show="hasPermission('ROOT')" :title="'授权管理'" :url="'/admin/userAuthorization'"/>
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto">
@@ -48,17 +46,13 @@
       return {
         loginForm: {username: null, password: null},
         userVo: null,
+        logined: account.logined()
       }
     },
     created: function () {
       this.userVo = account.getAccount()
       if (this.userVo == null) {
         this.logout()
-      }
-    },
-    computed: {
-      logined: function () {
-        return account.logined()
       }
     },
     methods: {
@@ -93,12 +87,14 @@
           .then(data => {
             account.setToken(data.data)
             this.getAccount()
+            this.logined = account.logined()
           })
       },
       logout: function () {
         this.loginForm = {username: null, password: null}
         this.userVo = null
         account.logout()
+        this.logined = account.logined()
       },
     },
     components: {

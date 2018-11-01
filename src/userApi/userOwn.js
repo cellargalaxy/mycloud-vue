@@ -35,7 +35,7 @@ function changeOwn(own) {
     return axios.createEmptyResponse()
   }
   if (util.checkParameterOr('确认修改所属？', own, 'ownId', 'ownUuid')) {
-    return userOwnApi.changeOwn(own.ownId, own.ownUuid, own.fileId, own.fileLength, own.contentType, own.fileName, own.sort, own.description)
+    return userOwnApi.changeOwn(own.ownId, own.ownUuid, own.fileName, own.sort, own.description)
   }
   return axios.createEmptyResponse()
 }

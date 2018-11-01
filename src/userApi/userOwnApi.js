@@ -21,13 +21,10 @@ function removeOwn(ownId, ownUuid) {
 }
 
 
-function changeOwn(ownId, ownUuid, fileId, fileLength, contentType, fileName, sort, description) {
+function changeOwn(ownId, ownUuid, fileName, sort, description) {
   return axios.tokenAxiosMethod.post(url + '/changeOwn', {
     ownId: ownId,
     ownUuid: ownUuid,
-    fileId: fileId,
-    fileLength: fileLength,
-    contentType: contentType,
     fileName: fileName,
     sort: sort,
     description: description
@@ -61,9 +58,6 @@ function getOwnCount(pageSize, page, ownId, ownUuid, fileId, contentType, fileNa
     fileId: fileId,
     fileName: fileName,
     sort: sort,
-    description: description,
-    createTime: createTime,
-    updateTime: updateTime
   })
 }
 

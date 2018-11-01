@@ -1,7 +1,7 @@
 <template>
   <b-card no-body>
     <div @click="setShow(true)">
-      <my-img :src="own.ownUrl"/>
+      <multimedia :url="own.ownUrl" :mime="own.contentType"/>
     </div>
 
     <b-input-group size="sm">
@@ -18,7 +18,7 @@
 <own-img-card @changeOwn="changeOwn" @removeOwn="removeOwn" :own="own"/>
 
 <script>
-  import myImg from './myImg'
+  import multimedia from './multimedia'
   import ownImgModal from './ownImgModal'
 
   export default {
@@ -63,7 +63,7 @@
       },
     },
     components: {
-      myImg,
+      multimedia,
       ownImgModal,
     },
   }

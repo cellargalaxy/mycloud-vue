@@ -1,6 +1,6 @@
 <template>
   <b-row>
-    <b-col sm="4" md="3" lg="2" xl="2" v-for="(own,ownIndex) in owns" :key="ownIndex">
+    <b-col sm="6" md="6" lg="4" xl="3" v-for="(own,ownIndex) in owns" :key="ownIndex">
       <own-img-card @changeOwn="changeOwn" @removeOwn="removeOwn" :own="own"/>
     </b-col>
   </b-row>
@@ -81,7 +81,7 @@
       },
     },
     components: {
-       ownImgCard,
+      ownImgCard,
     },
   }
 </script>

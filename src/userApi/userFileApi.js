@@ -2,6 +2,7 @@ import axios from '../utils/axios'
 
 const url = '/user/file'
 
+
 function uploadFile(file, sort, description) {
   const param = new FormData()
   param.append('file', file)
@@ -10,8 +11,8 @@ function uploadFile(file, sort, description) {
   return axios.fileAxiosMethod.post(url + '/uploadFile', param)
 }
 
-function submitUrl(url, sort, description) {
-  return axios.tokenAxiosMethod.post(url + '/submitUrl', {url: url, sort: sort, description: description})
+function submitUrl(urlString, sort, description) {
+  return axios.tokenAxiosMethod.post(url + '/submitUrl', {url: urlString, sort: sort, description: description})
 }
 
 function downloadTar() {

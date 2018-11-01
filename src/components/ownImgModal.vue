@@ -1,7 +1,7 @@
 <template>
   <b-modal v-model="tmpShow" :title="'修改'+own.username+'的'+own.fileName" centered @hide="setShow(false)">
     <b-container fluid>
-      <my-img :src="own.ownUrl"/>
+      <multimedia :url="own.ownUrl" :mime="own.contentType"/>
 
       <b-form @submit="changeOwn">
         <b-input-group prepend="文件名" size="sm">
@@ -52,7 +52,7 @@
 
 <script>
   import common from '../commonApi/common'
-  import myImg from './myImg'
+  import multimedia from './multimedia'
 
   export default {
     name: "ownModal",
@@ -114,7 +114,7 @@
       },
     },
     components: {
-      myImg,
+      multimedia,
     },
   }
 </script>

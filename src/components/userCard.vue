@@ -3,8 +3,8 @@
     <b-form>
       <b-button-group size="sm">
         <b-button>权限</b-button>
-        <b-button v-for="(authorization,authorizationIndex) in currentUserAuthorization.authorizations"
-                  v-text="authorization.permissionName" :key="authorizationIndex"></b-button>
+        <b-button v-for="(authorization,authorizationIndex) in currentUserVo.authorizations"
+                  v-text="authorization.permission" :key="authorizationIndex"/>
       </b-button-group>
     </b-form>
 
@@ -32,18 +32,18 @@
   </b-card>
 </template>
 
-<!--<user-card/>-->
+<user-card/>
 
 <script>
   import util from '../utils/util'
+  import account from '../utils/account'
   import userUser from '../userApi/userUser'
-  import publicApi from '../commonApi/publicApi'
 
   export default {
     name: "userCard",
     data() {
       return {
-        currentUserAuthorization: null,
+        currentUserVo: null,
         user: {userId: 0, username: null, userPassword: null},
       }
     },
@@ -52,14 +52,14 @@
     },
     methods: {
       created: function () {
-        this.currentUserAuthorization = publicApi.getCurrentUserAuthorization()
-        if (this.currentUserAuthorization != null) {
-          this.user.userId = this.currentUserAuthorization.user.userId
+        this.currentUserVo = account.getAccount()
+        if (this.currentUserVo != null) {
+          this.user.userId = this.currentUserVo.user.userId
         }
       },
       changeUser: function () {
         userUser.changeUser(this.user)
-          .then(res => {
+          .then(data => {
             util.successInfo('修改成功')
             this.user.username = null
             this.user.userPassword = null

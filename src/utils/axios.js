@@ -1,83 +1,10 @@
-// import axios from 'axios'
-// import qs from 'qs'
-// import util from './util'
-// import account from './account'
-//
-// const baseURL = 'http://127.0.0.1:8080'
-// const timeout = 1000 * 10
-//
-// const tokenAxios = axios.create({
-//   baseURL: baseURL,
-//   timeout: timeout
-// })
-// tokenAxios.interceptors.request.use(
-//   config => {
-//     config.data = qs.stringify(config.data)
-//     config.headers = {
-//       'Content-Type': 'application/x-www-form-urlencoded',
-//       'Authorization': account.getToken()
-//     }
-//     return config
-//   }
-// )
-//
-// const tokenAxiosMethod = createMethod(tokenAxios)
-//
-// function createMethod(axios) {
-//   axios.interceptors.request.use(
-//     error => {
-//       console.log(error)
-//       util.errorInfo('网络异常:' + error)
-//       return Promise.reject(error)
-//     }
-//   )
-//   axios.interceptors.response.use(
-//     response => {
-//       if (response.data.status != 1) {
-//         console.log(response.data.massage)
-//         util.errorInfo(response.data.massage)
-//       }
-//       return response.data
-//     },
-//     error => {
-//       console.log(error)
-//       util.errorInfo('网络异常:' + error)
-//       return Promise.reject(error)
-//     }
-//   )
-//
-//   return {
-//     get(url, data) {
-//       try {
-//         return axios.get(url, {params: data})
-//       } catch (e) {
-//         console.log(e)
-//         util.errorInfo('网络异常:' + e)
-//         return createEmptyResponseWithMassage('网络异常:' + e)
-//       }
-//     },
-//     async post(url, data) {
-//       try {
-//         return axios.post(url, data)
-//       } catch (e) {
-//         console.log(e)
-//         util.errorInfo('网络异常:' + e)
-//         return createEmptyResponseWithMassage('网络异常:' + e)
-//       }
-//     },
-//   }
-// }
-
-
-
-
 import axios from 'axios'
 import qs from 'qs'
 import util from './util'
 import account from './account'
 
-// const baseURL = 'http://api.mycloud.cellargalaxy.top'
-const baseURL = 'http://127.0.0.1:8080'
+const baseURL = 'http://api.mycloud.cellargalaxy.top'
+// const baseURL = 'http://127.0.0.1:8080'
 const timeout = 1000 * 10
 
 const tokenAxios = axios.create({
@@ -97,11 +24,10 @@ tokenAxios.interceptors.request.use(
 
 const fileAxios = axios.create({
   baseURL: baseURL,
-  timeout: timeout
+  timeout: 1000 * 60 * 60
 })
 fileAxios.interceptors.request.use(
   config => {
-    config.data = qs.stringify(config.data)
     config.headers = {
       'Content-Type': 'multipart/form-data',
       'Authorization': account.getToken()
@@ -115,22 +41,23 @@ const fileAxiosMethod = createMethod(fileAxios)
 
 function createMethod(axios) {
   axios.interceptors.request.use(
-    error => {
-      console.log(error)
+    (config) => {
+      return config
+    },
+    (error) => {
       util.errorInfo('网络异常:' + error)
       return Promise.reject(error)
     }
   )
   axios.interceptors.response.use(
-    response => {
+    (response) => {
       if (response.data.status != 1) {
-        console.log(response.data.massage)
         util.errorInfo(response.data.massage)
+        return createEmptyResponseWithMassage(response.data.massage)
       }
       return response.data
     },
-    error => {
-      console.log(error)
+    (error) => {
       util.errorInfo('网络异常:' + error)
       return Promise.reject(error)
     }
@@ -138,22 +65,10 @@ function createMethod(axios) {
 
   return {
     get(url, data) {
-      try {
-        return axios.get(url, {params: data})
-      } catch (e) {
-        console.log(e)
-        util.errorInfo('网络异常:' + e)
-        return createEmptyResponseWithMassage('网络异常:' + e)
-      }
+      return axios.get(url, {params: data})
     },
     post(url, data) {
-      try {
-        return axios.post(url, data)
-      } catch (e) {
-        console.log(e)
-        util.errorInfo('网络异常:' + e)
-        return createEmptyResponseWithMassage('网络异常:' + e)
-      }
+      return axios.post(url, data)
     },
   }
 }
@@ -161,34 +76,30 @@ function createMethod(axios) {
 function createAsyncMethod(axios) {
   return {
     async get(url, data) {
-      try {
-        let res = await axios.get(url, {params: data})
-        if (res.data.status != 1) {
-          console.log(res.data.massage)
-          util.errorInfo(res.data.massage)
-        }
-        return inspect(res.data)
-      } catch (e) {
-        console.log(e)
-        util.errorInfo('网络异常:' + e)
-        return createEmptyResponseWithMassage('网络异常:' + e)
+      let res = await axios.get(url, {params: data})
+      if (res.data.status != 1) {
+        util.errorInfo(res.data.massage)
+        return createEmptyResponseWithMassage(response.data.massage)
       }
+      return inspect(res.data)
     },
     async post(url, data) {
-      try {
-        let res = await axios.post(url, data)
-        if (res.data.status != 1) {
-          console.log(res.data.massage)
-          util.errorInfo(res.data.massage)
-        }
-        return inspect(res.data)
-      } catch (e) {
-        console.log(e)
-        util.errorInfo('网络异常:' + e)
-        return createEmptyResponseWithMassage('网络异常:' + e)
+      let res = await axios.post(url, data)
+      if (res.data.status != 1) {
+        util.errorInfo(res.data.massage)
+        return createEmptyResponseWithMassage(response.data.massage)
       }
+      return inspect(res.data)
     },
   }
+}
+
+function createEmptyResponseWithMassage(massage) {
+  return inspect({status: 0, massage: massage, data: null})
+}
+
+function createEmptyResponse() {
+  return createEmptyResponseWithMassage('请登录')
 }
 
 function inspect(data) {
@@ -199,14 +110,6 @@ function inspect(data) {
       reject(data.massage)
     }
   })
-}
-
-function createEmptyResponseWithMassage(massage) {
-  return inspect({status: 0, massage: massage, data: null})
-}
-
-function createEmptyResponse() {
-  return createEmptyResponseWithMassage('请登录')
 }
 
 export default {

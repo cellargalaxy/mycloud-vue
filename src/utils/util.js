@@ -114,13 +114,18 @@ function checkParameterAnd(message, data, ...parameters) {
         return false
       }
       if (isNaN(data[parameter])) {
-        data[parameter] = data[parameter].trim()
-        if (data[parameter].length == 0) {
-          console.log('非法参数,' + parameter + ':' + data[parameter])
-          errorInfo('非法参数,' + parameter + ':' + data[parameter])
-          return false
+        try {
+          data[parameter] = data[parameter].trim()
+          if (data[parameter].length == 0) {
+            console.log('非法参数,' + parameter + ':' + data[parameter])
+            errorInfo('非法参数,' + parameter + ':' + data[parameter])
+            return false
+          }
+        } catch (e) {
         }
       }
+    } else {
+      return false
     }
   }
   return message == null || confirmBox(message)
@@ -141,9 +146,12 @@ function checkParameterOr(message, data, ...parameters) {
         return message == null || confirmBox(message)
       }
       if (isNaN(data[parameter])) {
-        data[parameter] = data[parameter].trim()
-        if (data[parameter].length > 0) {
-          return message == null || confirmBox(message)
+        try {
+          data[parameter] = data[parameter].trim()
+          if (data[parameter].length > 0) {
+            return message == null || confirmBox(message)
+          }
+        } catch (e) {
         }
       }
     }
