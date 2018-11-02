@@ -1,5 +1,5 @@
 <template>
-  <b-modal v-model="tmpShow" :title="'修改'+own.username+'的'+own.fileName" centered @hide="setShow(false)">
+  <b-modal v-model="tmpShow" :title="'修改'+own.username+'的'+own.fileName" centered size="lg" @hide="setShow(false)">
     <b-container fluid>
       <multimedia :url="own.ownUrl" :mime="own.contentType"/>
 
