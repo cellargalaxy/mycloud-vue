@@ -3,8 +3,8 @@ import qs from 'qs'
 import util from './util'
 import account from './account'
 
-const baseURL = 'http://api.mycloud.cellargalaxy.top'
-// const baseURL = 'http://127.0.0.1:8080'
+// const baseURL = 'http://api.mycloud.cellargalaxy.top'
+const baseURL = 'http://127.0.0.1:8080'
 const timeout = 1000 * 10
 
 const tokenAxios = axios.create({
@@ -22,11 +22,25 @@ tokenAxios.interceptors.request.use(
   }
 )
 
-const fileAxios = axios.create({
+const tokenAsyncAxios = axios.create({
+  baseURL: baseURL,
+  timeout: timeout
+})
+tokenAsyncAxios.interceptors.request.use(
+  config => {
+    config.data = qs.stringify(config.data)
+    config.headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': account.getToken()
+    }
+    return config
+  }
+)
+const fileAsyncAxios = axios.create({
   baseURL: baseURL,
   timeout: 1000 * 60 * 60
 })
-fileAxios.interceptors.request.use(
+fileAsyncAxios.interceptors.request.use(
   config => {
     config.headers = {
       'Content-Type': 'multipart/form-data',
@@ -37,7 +51,9 @@ fileAxios.interceptors.request.use(
 )
 
 const tokenAxiosMethod = createMethod(tokenAxios)
-const fileAxiosMethod = createMethod(fileAxios)
+
+const tokenAsyncAxiosMethod = createAsyncMethod(tokenAsyncAxios)
+const fileAsyncAxiosMethod = createAsyncMethod(fileAsyncAxios)
 
 function createMethod(axios) {
   axios.interceptors.request.use(
@@ -113,8 +129,9 @@ function inspect(data) {
 }
 
 export default {
-  fileAxiosMethod: fileAxiosMethod,
   tokenAxiosMethod: tokenAxiosMethod,
+  tokenAsyncAxiosMethod: tokenAsyncAxiosMethod,
+  fileAsyncAxiosMethod: fileAsyncAxiosMethod,
   createEmptyResponseWithMassage: createEmptyResponseWithMassage,
   createEmptyResponse: createEmptyResponse,
 }

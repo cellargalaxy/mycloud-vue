@@ -6,6 +6,10 @@
         <b-button v-for="(authorization,authorizationIndex) in currentUserVo.authorizations"
                   v-text="authorization.permission" :key="authorizationIndex"/>
       </b-button-group>
+
+      <b-button-group size="sm">
+        <b-button variant="success" @click="downloadTar">下载全部文件</b-button>
+      </b-button-group>
     </b-form>
 
     <br/>
@@ -38,6 +42,7 @@
   import util from '../utils/util'
   import account from '../utils/account'
   import userUser from '../userApi/userUser'
+  import userFile from '../userApi/userFile'
 
   export default {
     name: "userCard",
@@ -64,6 +69,9 @@
             this.user.username = null
             this.user.userPassword = null
           })
+      },
+      downloadTar: function () {
+        userFile.downloadTar()
       },
     },
   }

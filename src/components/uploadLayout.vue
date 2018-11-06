@@ -1,12 +1,12 @@
 <template>
   <div>
-    <upload-file-card @upload="uploadFile" :sorts="sorts"/>
-    <upload-url-card @upload="uploadUrl" :sorts="sorts"/>
+    <upload-file-card @uploads="uploadFiles" :sorts="sorts"/>
+    <upload-url-card @uploads="uploadUrls" :sorts="sorts"/>
     <upload-result-card :forms="forms"/>
   </div>
 </template>
 
-<upload-layout @uploadFile="uploadFile" @uploadUrl="uploadUrl" :sorts="sorts" :forms="forms"/>
+<upload-layout @uploadFiles="uploadFiles" @uploadUrls="uploadUrls" :sorts="sorts" :forms="forms"/>
 
 <script>
   import uploadFileCard from './uploadFileCard'
@@ -86,11 +86,11 @@
       },
     },
     methods: {
-      uploadFile: function (uploadFileForm) {
-        this.$emit('uploadFile', uploadFileForm)
+      uploadFiles: function (uploadFileForms) {
+        this.$emit('uploadFiles', uploadFileForms)
       },
-      uploadUrl: function (uploadUrlForm) {
-        this.$emit('uploadUrl', uploadUrlForm)
+      uploadUrls: function (uploadUrlForms) {
+        this.$emit('uploadUrls', uploadUrlForms)
       },
     },
     components: {

@@ -5,7 +5,7 @@
     </div>
 
     <b-input-group size="sm">
-      <b-form-input type="text" placeholder="文件名" v-model="own.fileName"/>
+      <b-form-input type="url" placeholder="url" v-model="own.ownUrl"/>
       <b-input-group-append>
         <b-btn @click="changeOwn" variant="outline-warning">修改</b-btn>
       </b-input-group-append>

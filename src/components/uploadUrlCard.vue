@@ -2,7 +2,7 @@
   <b-card>
     <b-form>
       <b-input-group prepend="">
-        <b-form-input v-model="uploadUrlForm.url" type="url" placeholder="url"/>
+        <b-form-textarea v-model="uploadUrlForm.urls" placeholder="urls" rows="1"/>
       </b-input-group>
 
       <b-form-group label="">
@@ -16,14 +16,16 @@
         <b-form-textarea v-model="uploadUrlForm.description" placeholder="描述" rows="1" maxlength="256"/>
       </b-form-group>
 
-      <b-button type="submit" variant="primary" style="width: 100%" @click="upload">上传</b-button>
+      <b-button type="submit" variant="primary" style="width: 100%" @click="uploads">上传</b-button>
     </b-form>
   </b-card>
 </template>
 
-<upload-url-card @upload="upload" :sorts="sorts"/>
+<upload-url-card @uploads="uploads" :sorts="sorts"/>
 
 <script>
+  import util from "../utils/util";
+
   export default {
     name: "uploadUrlCard",
     props: {
@@ -35,12 +37,21 @@
     },
     data() {
       return {
-        uploadUrlForm: {url: null, sort: null, description: null,}
+        uploadUrlForm: {urls: null, sort: null, description: null,}
       }
     },
     methods: {
-      upload: function () {
-        this.$emit('upload', this.uploadUrlForm)
+      uploads: function () {
+        if (this.uploadUrlForm.urls == null || this.uploadUrlForm.urls == '') {
+          util.errorInfo('还未填写任何的url')
+          return
+        }
+        let urls = this.uploadUrlForm.urls.split(/[\n]/);
+        let uploadUrlForms = []
+        for (let i = 0; i < urls.length; i++) {
+          uploadUrlForms.push({url: urls[i], sort: this.uploadUrlForm.sort, description: this.uploadUrlForm.sort})
+        }
+        this.$emit('uploads', uploadUrlForms)
         this.uploadUrlForm = {url: null, sort: null, description: null,}
       },
     },

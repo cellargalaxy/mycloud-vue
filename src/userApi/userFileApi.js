@@ -1,4 +1,5 @@
 import axios from '../utils/axios'
+import account from '../utils/account'
 
 const url = '/user/file'
 
@@ -8,15 +9,17 @@ function uploadFile(file, sort, description) {
   param.append('file', file)
   param.append('sort', sort)
   param.append('description', description)
-  return axios.fileAxiosMethod.post(url + '/uploadFile', param)
+  return axios.fileAsyncAxiosMethod.post(url + '/uploadFile', param)
 }
 
 function submitUrl(urlString, sort, description) {
-  return axios.tokenAxiosMethod.post(url + '/submitUrl', {url: urlString, sort: sort, description: description})
+  return axios.tokenAsyncAxiosMethod.post(url + '/submitUrl', {url: urlString, sort: sort, description: description})
 }
 
 function downloadTar() {
-  return axios.tokenAxiosMethod.get(url + '/downloadTar', {})
+  let parameter = {}
+  parameter[account.tokenKey] = account.getToken()
+  return axios.tokenAsyncAxiosMethod.get(url + '/downloadTar', parameter)
 }
 
 export default {

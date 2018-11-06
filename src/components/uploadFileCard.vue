@@ -17,12 +17,12 @@
         <b-form-textarea v-model="uploadFileForm.description" placeholder="描述" rows="1" maxlength="256"/>
       </b-form-group>
 
-      <b-button type="submit" variant="primary" style="width: 100%" @click="upload">上传</b-button>
+      <b-button type="submit" variant="primary" style="width: 100%" @click="uploads">上传</b-button>
     </b-form>
   </b-card>
 </template>
 
-<upload-file-card @upload="upload" :sorts="sorts"/>
+<upload-file-card @uploads="uploads" :sorts="sorts"/>
 
 <script>
   import util from '../utils/util'
@@ -42,18 +42,20 @@
       }
     },
     methods: {
-      upload: function () {
+      uploads: function () {
         if (this.uploadFileForm.files == null || this.uploadFileForm.files.length == 0) {
           util.errorInfo('还未选择任何文件')
           return
         }
+        let uploadForms = []
         for (let i = 0; i < this.uploadFileForm.files.length; i++) {
-          this.$emit('upload', {
+          uploadForms.push({
             file: this.uploadFileForm.files[i],
             sort: this.uploadFileForm.sort,
             description: this.uploadFileForm.description
           })
         }
+        this.$emit('uploads', uploadForms)
         this.uploadFileForm = {files: [], sort: null, description: null,}
       },
     },
