@@ -18,6 +18,7 @@
   import ownLayout from '../components/ownLayout'
   import util from '../utils/util'
   import userOwn from '../userApi/userOwn'
+  import userFile from '../userApi/userFile'
 
   export default {
     name: "userOwnPage",
@@ -46,9 +47,10 @@
           })
       },
       removeOwn: function (own) {
-        userOwn.removeOwn(own)
+        userFile.removeFile(own)
           .then(data => {
             util.successInfo('删除成功')
+            this.listOwn()
           })
       },
       turnPage: function (page) {

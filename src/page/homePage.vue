@@ -131,6 +131,9 @@
       }
     },
     methods: {
+      chooseSort: function (sort) {
+        console.log('选择分类：' + sort)
+      },
       changeOwn: function (own) {
         util.successInfo('修改成功')
       },

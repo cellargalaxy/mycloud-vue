@@ -33,8 +33,20 @@ function downloadTar() {
   return userFileApi.downloadTar()
 }
 
+function removeFile(own) {
+  if (!account.logined()) {
+    util.errorInfo('请登录')
+    return axios.createEmptyResponse()
+  }
+  if (util.checkParameterOr('？？？确认《删除》文件？？？', own, 'ownId', 'ownUuid')) {
+    return userFileApi.removeFile(own.ownId, own.ownUuid)
+  }
+  return axios.createEmptyResponse()
+}
+
 export default {
   uploadFile: uploadFile,
   submitUrl: submitUrl,
   downloadTar: downloadTar,
+  removeFile: removeFile,
 }

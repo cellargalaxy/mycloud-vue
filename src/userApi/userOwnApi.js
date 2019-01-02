@@ -13,14 +13,6 @@ function addOwn(fileId, fileLength, contentType, fileName, sort, description) {
   })
 }
 
-function removeOwn(ownId, ownUuid) {
-  return axios.tokenAxiosMethod.post(url + '/removeOwn', {
-    ownId: ownId,
-    ownUuid: ownUuid,
-  })
-}
-
-
 function changeOwn(ownId, ownUuid, fileName, sort, description) {
   return axios.tokenAxiosMethod.post(url + '/changeOwn', {
     ownId: ownId,
@@ -68,7 +60,6 @@ function listSort() {
 
 export default {
   addOwn: addOwn,
-  removeOwn: removeOwn,
   getOwn: getOwn,
   getOwnCount: getOwnCount,
   listOwn: listOwn,

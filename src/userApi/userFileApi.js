@@ -22,8 +22,16 @@ function downloadTar() {
   return axios.tokenAsyncAxiosMethod.get(url + '/downloadTar', parameter)
 }
 
+function removeFile(ownId, ownUuid) {
+  return axios.tokenAxiosMethod.post(url + '/removeFile', {
+    ownId: ownId,
+    ownUuid: ownUuid,
+  })
+}
+
 export default {
   uploadFile: uploadFile,
   submitUrl: submitUrl,
   downloadTar: downloadTar,
+  removeFile: removeFile,
 }

@@ -3,14 +3,6 @@ import account from "../utils/account";
 import util from "../utils/util";
 import axios from "../utils/axios";
 
-function getUserVo() {
-  if (!account.logined()) {
-    util.errorInfo('请登录')
-    return axios.createEmptyResponse()
-  }
-  return userUserApi.getUserVo()
-}
-
 function changeUser(user) {
   if (!account.logined()) {
     util.errorInfo('请登录')
@@ -23,7 +15,6 @@ function changeUser(user) {
 }
 
 export default {
-  getUserVo: getUserVo,
   changeUser: changeUser,
 }
 

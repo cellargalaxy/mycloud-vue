@@ -22,8 +22,9 @@
           <b-button size="sm" type="submit">登录</b-button>
         </b-nav-form>
 
-        <b-nav-item v-show="logined" href="#/" @click="logout">
-          <b-button size="sm">注销</b-button>
+        <b-nav-item v-show="logined">
+          {{userVo!=null?userVo.username:'null'}}
+          <b-button size="sm" @click="logout">注销</b-button>
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
@@ -36,7 +37,7 @@
 <script>
   import util from '../utils/util'
   import account from '../utils/account'
-  import userUser from '../userApi/userUser'
+  import guestUser from '../guest/guestUser'
   import publicApi from '../commonApi/publicApi'
   import myNavItem from './myNavItem'
 
@@ -59,7 +60,7 @@
       getAccount() {
         this.userVo = account.getAccount()
         if (this.userVo == null) {
-          userUser.getUserVo()
+          guestUser.getUserVo()
             .then(data => {
               this.userVo = data.data
               account.setAccount(this.userVo)
@@ -71,11 +72,11 @@
         }
       },
       hasPermission: function (permission) {
-        if (this.userVo == null || this.userVo.authorizations == null) {
+        if (this.userVo == null || this.userVo.permissions == null) {
           return false;
         }
-        for (let i = 0; i < this.userVo.authorizations.length; i++) {
-          if (this.userVo.authorizations[i].permission == permission) {
+        for (let i = 0; i < this.userVo.permissions.length; i++) {
+          if (this.userVo.permissions[i] == permission) {
             return true;
           }
         }

@@ -3,8 +3,8 @@
     <b-form>
       <b-button-group size="sm">
         <b-button>权限</b-button>
-        <b-button v-for="(authorization,authorizationIndex) in currentUserVo.authorizations"
-                  v-text="authorization.permission" :key="authorizationIndex"/>
+        <b-button v-for="(permission,permissionIndex) in currentUserVo.permissions"
+                  v-text="permission" :key="permissionIndex"/>
       </b-button-group>
 
       <b-button-group size="sm">
@@ -59,7 +59,7 @@
       created: function () {
         this.currentUserVo = account.getAccount()
         if (this.currentUserVo != null) {
-          this.user.userId = this.currentUserVo.user.userId
+          this.user.userId = this.currentUserVo.userId
         }
       },
       changeUser: function () {

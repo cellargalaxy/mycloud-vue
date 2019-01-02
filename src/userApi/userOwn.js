@@ -18,17 +18,6 @@ function addOwn(own) {
   return axios.createEmptyResponse()
 }
 
-function removeOwn(own) {
-  if (!account.logined()) {
-    util.errorInfo('请登录')
-    return axios.createEmptyResponse()
-  }
-  if (util.checkParameterOr('确认删除所属？', own, 'ownId', 'ownUuid')) {
-    return userOwnApi.removeOwn(own.ownId, own.ownUuid)
-  }
-  return axios.createEmptyResponse()
-}
-
 function changeOwn(own) {
   if (!account.logined()) {
     util.errorInfo('请登录')
@@ -76,7 +65,6 @@ function listSort() {
 export default {
   createOwnQuery: createOwnQuery,
   addOwn: addOwn,
-  removeOwn: removeOwn,
   getOwn: getOwn,
   getOwnCount: getOwnCount,
   listOwn: listOwn,
