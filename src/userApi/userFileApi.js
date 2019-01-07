@@ -16,7 +16,7 @@ function submitUrl(urlString, sort, description) {
 }
 
 function downloadTar() {
-  return axios.tokenAsyncAxiosMethod.get(url + '/downloadTar', {})
+  window.open(axios.baseURL + url + '/downloadTar', '_blank');
 }
 
 function removeFile(ownId, ownUuid) {

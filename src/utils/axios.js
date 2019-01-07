@@ -129,6 +129,7 @@ function inspect(data) {
 }
 
 export default {
+  baseURL: baseURL,
   tokenAxiosMethod: tokenAxiosMethod,
   tokenAsyncAxiosMethod: tokenAsyncAxiosMethod,
   fileAsyncAxiosMethod: fileAsyncAxiosMethod,
