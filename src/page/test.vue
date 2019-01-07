@@ -1,9 +1,9 @@
 <template>
-  <!--<navbar/>-->
+  <navbar/>
 </template>
 
 <script>
-  import navbar from '../components/userCard'
+  import navbar from '../components/recentExpireOwnTable'
 
   export default {
     name: "test",

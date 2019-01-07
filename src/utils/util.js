@@ -181,6 +181,10 @@ function checkQueryParameter(data, ...parameters) {
   return checkParameterAnd(null, data, ...parameters)
 }
 
+function isNumber(val) {
+  return val != null && !isNaN(val)
+}
+
 export default {
   formatTimestamp: formatTimestamp,
   formatDate: formatDate,
@@ -195,4 +199,5 @@ export default {
   checkParameterAnd: checkParameterAnd,
   checkParameterOr: checkParameterOr,
   checkQueryParameter: checkQueryParameter,
+  isNumber: isNumber,
 }

@@ -1,14 +1,14 @@
 <template>
   <b-card no-body>
-    <div @click="setShow(true)">
+    <div>
       <multimedia :url="own.ownUrl" :mime="own.contentType"/>
     </div>
 
     <b-input-group size="sm">
       <b-form-input type="url" placeholder="url" v-model="own.ownUrl" readonly/>
-      <!--<b-input-group-append>-->
-        <!--<b-btn @click="changeOwn" variant="outline-warning">修改</b-btn>-->
-      <!--</b-input-group-append>-->
+      <b-input-group-append>
+        <b-btn variant="outline-warning" @click="setShow(true)">≡</b-btn>
+      </b-input-group-append>
     </b-input-group>
 
     <own-img-modal @changeOwn="changeOwn" @removeOwn="removeOwn" @setShow="setShow" :show="modelShow" :own="own"/>

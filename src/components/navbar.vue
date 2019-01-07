@@ -37,7 +37,7 @@
 <script>
   import util from '../utils/util'
   import account from '../utils/account'
-  import guestUser from '../guest/guestUser'
+  import guestUser from '../guestApi/guestUser'
   import publicApi from '../commonApi/publicApi'
   import myNavItem from './myNavItem'
 

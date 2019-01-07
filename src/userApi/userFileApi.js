@@ -1,5 +1,4 @@
 import axios from '../utils/axios'
-import account from '../utils/account'
 
 const url = '/user/file'
 
@@ -17,9 +16,7 @@ function submitUrl(urlString, sort, description) {
 }
 
 function downloadTar() {
-  let parameter = {}
-  parameter[account.tokenKey] = account.getToken()
-  return axios.tokenAsyncAxiosMethod.get(url + '/downloadTar', parameter)
+  return axios.tokenAsyncAxiosMethod.get(url + '/downloadTar', {})
 }
 
 function removeFile(ownId, ownUuid) {
