@@ -2,7 +2,7 @@
   <b-card>
     <b-form>
       <b-input-group prepend="">
-        <b-form-textarea v-model="uploadUrlForm.urls" placeholder="urls" rows="1"/>
+        <b-form-textarea v-model="uploadUrlForm.urls" :rows="urlCount" placeholder="urls"/>
       </b-input-group>
 
       <b-form-group label="">
@@ -38,6 +38,20 @@
     data() {
       return {
         uploadUrlForm: {urls: null, sort: null, description: null,}
+      }
+    },
+    computed: {
+      urlCount: function () {
+        let minRows = 3
+        if (this.uploadUrlForm.urls == null) {
+          return minRows
+        }
+        var urlCount = this.uploadUrlForm.urls.split("\r\n|\r|\n").length
+        if (urlCount < minRows) {
+          return minRows
+        } else {
+          return urlCount
+        }
       }
     },
     methods: {

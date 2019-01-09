@@ -8,7 +8,7 @@
 
     <br/>
 
-    <b-row v-if="false">
+    <b-row>
       <b-col sm="0" md="0" lg="1" xl="2"/>
       <b-col sm="12" md="12" lg="10" xl="8">
         <b-card
@@ -163,20 +163,21 @@
       }
     },
     created: function () {
-      this.ownExpireTimes.push({value: new Date().getTime() + 1000 * 60 * 60 * 1, text: '1h'})
-      this.ownExpireTimes.push({value: new Date().getTime() + 1000 * 60 * 60 * 2, text: '2h'})
-      this.ownExpireTimes.push({value: new Date().getTime() + 1000 * 60 * 60 * 6, text: '6h'})
-      this.ownExpireTimes.push({value: new Date().getTime() + 1000 * 60 * 60 * 12, text: '12h'})
-      this.ownExpireTimes.push({value: new Date().getTime() + 1000 * 60 * 60 * 24 * 1, text: '1d'})
-      this.ownExpireTimes.push({value: new Date().getTime() + 1000 * 60 * 60 * 24 * 2, text: '2d'})
-      this.ownExpireTimes.push({value: new Date().getTime() + 1000 * 60 * 60 * 24 * 5, text: '5d'})
-      this.ownExpireTimes.push({value: new Date().getTime() + 1000 * 60 * 60 * 24 * 7, text: '7d'})
-      this.ownExpireTimes.push({value: new Date().getTime() + 1000 * 60 * 60 * 24 * 10, text: '10d'})
+      this.ownExpireTimes.push({value: 1000 * 60 * 60 * 1, text: '1h'})
+      this.ownExpireTimes.push({value: 1000 * 60 * 60 * 2, text: '2h'})
+      this.ownExpireTimes.push({value: 1000 * 60 * 60 * 6, text: '6h'})
+      this.ownExpireTimes.push({value: 1000 * 60 * 60 * 12, text: '12h'})
+      this.ownExpireTimes.push({value: 1000 * 60 * 60 * 24 * 1, text: '1d'})
+      this.ownExpireTimes.push({value: 1000 * 60 * 60 * 24 * 2, text: '2d'})
+      this.ownExpireTimes.push({value: 1000 * 60 * 60 * 24 * 5, text: '5d'})
+      this.ownExpireTimes.push({value: 1000 * 60 * 60 * 24 * 7, text: '7d'})
+      this.ownExpireTimes.push({value: 1000 * 60 * 60 * 24 * 10, text: '10d'})
 
       this.listRecentExpireOwn()
     },
     methods: {
       uploadTmpFile: async function (uploadTmpFileForm) {
+        uploadTmpFileForm.ownExpireTime += new Date().getTime()
         uploadTmpFileForm.uploadFunc = guestFile.uploadTmpFile
         let data = await guestFile.uploadTmpFile(uploadTmpFileForm)
         uploadTmpFileForm.own = data

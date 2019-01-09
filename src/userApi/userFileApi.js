@@ -1,4 +1,5 @@
 import axios from '../utils/axios'
+import account from '../utils/account'
 
 const url = '/user/file'
 
@@ -16,7 +17,7 @@ function submitUrl(urlString, sort, description) {
 }
 
 function downloadTar() {
-  window.open(axios.baseURL + url + '/downloadTar', '_blank');
+  window.open(axios.baseURL + url + '/downloadTar?' + account.tokenKey + '=' + account.getToken(), '_blank');
 }
 
 function removeFile(ownId, ownUuid) {
