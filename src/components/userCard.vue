@@ -27,7 +27,7 @@
 
     <b-form>
       <b-input-group prepend="新密码" size="sm">
-        <b-form-input v-model="user.userPassword"></b-form-input>
+        <b-form-input v-model="user.password"></b-form-input>
         <b-input-group-append>
           <b-btn variant="outline-warning" @click="changeUser">修改密码</b-btn>
         </b-input-group-append>
@@ -49,7 +49,7 @@
     data() {
       return {
         currentUserVo: null,
-        user: {userId: 0, username: null, userPassword: null},
+        user: {userId: 0, username: null, password: null},
       }
     },
     created: function () {
