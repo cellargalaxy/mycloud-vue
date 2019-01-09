@@ -39,6 +39,7 @@
       chooseSort: function (sort) {
         this.ownQuery.sort = sort
         this.listOwn()
+        this.getOwnCount()
       },
       changeOwn: function (own) {
         userOwn.changeOwn(own)
